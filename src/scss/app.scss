@@ -1,6 +1,20 @@
-div {
-  color: #fff;
-  p {
-    color: #f0f;
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.doc-image {
+  display: block;
+  width: 480px;
+  height: auto;
+  background-image: url('../src/img/sample.png');
+  background-size: 100% auto;
+  position: relative;
+  div {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #000;
+    cursor: pointer;
   }
 }
