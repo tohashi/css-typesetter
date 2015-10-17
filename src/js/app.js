@@ -6,6 +6,7 @@ class DocEditor extends React.Component {
     return (
       <div>
         editor
+        <img src="./src/img/sample.png" />
       </div>
     );
   }
