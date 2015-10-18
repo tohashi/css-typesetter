@@ -54,7 +54,7 @@ class DocEditor extends React.Component {
 
     return (
       <div>
-        <div className="doc-editor">
+        <div className="doc-style-editor">
           <div className="doc-image" style={style}>
             {(() => {
               return this.state.texts.map((text, i) => {
