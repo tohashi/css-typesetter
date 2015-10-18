@@ -3,13 +3,21 @@ body {
   padding: 0;
 }
 
+.doc-editor {
+  overflow: hidden;
+  margin: 10px auto;
+  width: 100%;
+}
+
 .doc-image {
   display: block;
-  width: 480px;
+  width: 720px;
   height: auto;
+  float: left;
   background-image: url('../src/img/sample.png');
   background-size: 100% auto;
   position: relative;
+  border: 1px solid #000;
   div {
     position: absolute;
     left: 0;
@@ -17,4 +25,17 @@ body {
     border: 1px solid #000;
     cursor: pointer;
   }
+}
+
+.setting {
+  display: block;
+  width: 25%;
+  height: 200px;
+  margin-left: 10px;
+  float: left;
+  border: 1px solid #000;
+}
+
+.result {
+  clear: both;
 }
