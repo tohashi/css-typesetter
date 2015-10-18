@@ -1,14 +1,13 @@
 {
   "name": "doc-style-editor",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "watch": "watchify src/js/app.js -t babelify -o dist/bundle.js",
     "sass": "node-sass src/scss/app.scss --watch -o dist/"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
@@ -21,6 +20,15 @@
     "react": "^0.14.0",
     "react-addons-linked-state-mixin": "^0.14.0",
     "react-dom": "^0.14.0",
-    "react-draggable": "tohashi/react-draggable"
-  }
+    "react-draggable": "github:tohashi/react-draggable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tohashi/doc-style-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tohashi/doc-style-editor/issues"
+  },
+  "homepage": "https://github.com/tohashi/doc-style-editor#readme",
+  "description": ""
 }
