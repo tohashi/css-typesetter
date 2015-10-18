@@ -1,13 +1,23 @@
 import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import _ from 'lodash';
 
 import TextStore from '../stores/textStore';
 import SettingAction from '../actions/settingAction';
 
 export default class Setting extends React.Component {
+
   constructor() {
     super(...arguments);
     this.textChangeHandler = this.handleTextChange.bind(this);
-    this.state = { text: TextStore.texts };
+    this.linkState = LinkedStateMixin.linkState;
+    this.state = {
+      x: 0,
+      y: 0,
+      value: '',
+      key: '',
+      texts: TextStore.texts
+    };
   }
 
   componentDidMount() {
@@ -23,19 +33,17 @@ export default class Setting extends React.Component {
   }
 
   handleAddText() {
-    SettingAction.add(
-      { key: 'draggable-3', x: 0, y: 0, value: 'test' }
-    );
+    SettingAction.add(_.pick(this.state, 'x', 'y', 'value', 'key'));
   }
 
   render() {
     return (
       <div className="setting">
         <ul>
-          <li>x<input /></li>
-          <li>y<input /></li>
-          <li>value<input /></li>
-          <li>class<input /></li>
+          <li>x<input valueLink={this.linkState('x')} /></li>
+          <li>y<input valueLink={this.linkState('y')} /></li>
+          <li>value<input valueLink={this.linkState('value')} /></li>
+          <li>key<input valueLink={this.linkState('key')} /></li>
         </ul>
         <button onClick={this.handleAddText.bind(this)}>add</button>
       </div>

@@ -4,11 +4,7 @@ import { ActionTypes } from '../constants'
 
 const CHANGE_EVENT = 'change';
 
-let texts = [
-  { key: 'draggable-0', x: 0, y: 0, value: 'test' },
-  { key: 'draggable-1', x: 0, y: 0, value: '100,000' },
-  { key: 'draggable-2', x: 0, y: 0, value: 'テスト' }
-];
+let texts = [];
 
 function updateTexts(params) {
   texts = texts.map((text) => {
