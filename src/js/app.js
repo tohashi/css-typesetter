@@ -12,6 +12,8 @@ class DocEditor extends React.Component {
     return {
       x: 0,
       y: 0,
+      width: 0,
+      height: 0,
       value: '',
       key: '',
       fontSize: 12
@@ -117,6 +119,8 @@ class DocEditor extends React.Component {
             {(() => {
               return this.state.texts.map((text, i) => {
                 const textStyle = {
+                  width: text.width || 'auto',
+                  height: text.height || 'auto',
                   fontSize: `${text.fontSize}px`
                 };
                 let className = 'draggable-text';
