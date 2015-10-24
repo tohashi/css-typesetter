@@ -3,6 +3,13 @@ body {
   padding: 0;
 }
 
+ul {
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+
 .doc-style-editor {
   margin: 10px;
 }
@@ -34,10 +41,15 @@ body {
 .setting {
   display: block;
   width: 25%;
-  height: 200px;
+  height: auto;
   margin-left: 10px;
   float: left;
   border: 1px solid #000;
+  .text-list {
+    li {
+      border: 1px solid #000;
+    }
+  }
 }
 
 .result {
