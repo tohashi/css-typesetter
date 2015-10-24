@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { EventEmitter } from 'events';
 import Dispatcher from '../dispatcher';
 import { ActionTypes } from '../constants'
@@ -64,6 +65,12 @@ instance.dispatchToken = Dispatcher.register((action) => {
     break;
   case ActionTypes.REMOVE_TEXT:
     removeText(action.key);
+    instance.emitChange();
+    break;
+  case ActionTypes.COPY_TEXT:
+    const text = _.clone(instance.findText(action.key));
+    text.key += `-${_.uniqueId()}`
+    updateTexts(text);
     instance.emitChange();
     break;
   }

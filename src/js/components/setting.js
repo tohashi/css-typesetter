@@ -20,6 +20,11 @@ export default class Setting extends React.Component {
     this.props.handleSelectText(null);
   }
 
+  handleCopyText(key) {
+    SettingAction.copy(this.props.text.key);
+    this.props.handleSelectText(null);
+  }
+
   handleSelectText(key) {
     this.props.handleSelectText(
       this.isCurrentText(key) ? null : key
@@ -47,7 +52,10 @@ export default class Setting extends React.Component {
             );
           }
           return (
-            <button onClick={this.handleRemoveText.bind(this)}>remove</button>
+            <div>
+              <button onClick={this.handleCopyText.bind(this)}>copy</button>
+              <button onClick={this.handleRemoveText.bind(this)}>remove</button>
+            </div>
           );
         }())}
 

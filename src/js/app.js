@@ -24,6 +24,8 @@ class DocEditor extends React.Component {
     this.state = {
       previewWidth: 720,
       previewHeight: 0,
+      imageWidth: 0,
+      imageHeight: 0,
       textParams: _.clone(this.defaultTextParams),
       texts: TextStore.texts
     }
@@ -34,7 +36,9 @@ class DocEditor extends React.Component {
     img.src = './src/img/sample.png';
     img.onload = ((e) => {
       this.setState({
-        previewHeight: ((this.state.previewWidth/ e.target.width) * e.target.height) || 0
+        imageWidth: e.target.width,
+        imageHeight: e.target.height,
+        previewHeight: ((this.state.previewWidth / e.target.width) * e.target.height) || 0
       });
     });
     TextStore.addChangeListener(this.textChangeHandler);
@@ -118,6 +122,7 @@ class DocEditor extends React.Component {
                 let className = 'draggable-text';
                 if (this.isCurrentText(text.key)) {
                   className += ' selected';
+                  textStyle.zIndex = 1;
                 }
 
                 return (

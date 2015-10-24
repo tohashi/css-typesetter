@@ -13,7 +13,14 @@ export default {
     Dispatcher.dispatch({
       actionType: ActionTypes.REMOVE_TEXT,
       key
-    })
+    });
+  },
+
+  copy(key) {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.COPY_TEXT,
+      key
+    });
   }
 };
 
