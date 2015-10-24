@@ -73,6 +73,18 @@ instance.dispatchToken = Dispatcher.register((action) => {
     updateTexts(text);
     instance.emitChange();
     break;
+  case ActionTypes.CHANGE_ZOOM:
+    const zoom = action.zoom;
+    texts = texts.map((text) => {
+      return _.extend({}, text, {
+        x: Math.round(text.x * zoom),
+        y: Math.round(text.y * zoom),
+        width: Math.round(text.width * zoom),
+        height: Math.round(text.height * zoom)
+      });
+    });
+    instance.emitChange();
+    break;
   }
 
 });

@@ -38,6 +38,9 @@ export default class Setting extends React.Component {
   render() {
     return (
       <div className="setting">
+        <div>
+          previewWidth<input value={this.props.previewWidth} onChange={this.props.changePreviewWidth} />
+        </div>
         <ul>
           <li>x<input name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></li>
           <li>y<input name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></li>

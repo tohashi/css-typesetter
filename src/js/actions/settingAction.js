@@ -21,6 +21,13 @@ export default {
       actionType: ActionTypes.COPY_TEXT,
       key
     });
+  },
+
+  changeZoom(zoom) {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.CHANGE_ZOOM,
+      zoom
+    });
   }
 };
 

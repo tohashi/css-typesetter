@@ -106,6 +106,17 @@ class DocEditor extends React.Component {
     }
   }
 
+  changePreviewWidth(e) {
+    const previewWidth = e.target.value - 0;
+    const prevZoom = this.state.previewWidth / this.state.imageWidth;
+    const nextZoom = previewWidth / this.state.imageWidth;
+    this.setState({
+      previewWidth,
+      previewHeight: nextZoom * this.state.imageHeight 
+    });
+    SettingAction.changeZoom(1 / (prevZoom / nextZoom));
+  }
+
   render() {
     const imageStyle = {
       width: `${this.state.previewWidth}px`,
@@ -152,6 +163,8 @@ class DocEditor extends React.Component {
           <Setting
             text={this.state.textParams}
             texts={this.state.texts}
+            previewWidth={this.state.previewWidth}
+            changePreviewWidth={this.changePreviewWidth.bind(this)}
             handleInputChange={this.handleInputChange.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)} />
