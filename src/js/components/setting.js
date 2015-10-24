@@ -17,7 +17,9 @@ export default class Setting extends React.Component {
   }
 
   handleSelectText(key) {
-    this.props.handleSelectText(key);
+    this.props.handleSelectText(
+      this.props.currentTextKey === key ? null : key
+    );
   }
 
   handleInputChange(e) {

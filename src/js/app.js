@@ -78,10 +78,12 @@ class DocEditor extends React.Component {
 
   handleInputChange(key, value) {
     this.setState((state) => {
-      state.textParams[key] = value;
+      state.textParams[key] = _.isNaN(parseInt(value)) ? value : parseInt(value);
       return state;
     });
-    this.handleUpdateText();
+    if (this.props.currentTextKey) {
+      this.handleUpdateText();
+    }
   }
 
   handleUpdateText() {
