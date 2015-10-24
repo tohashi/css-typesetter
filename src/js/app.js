@@ -24,7 +24,6 @@ class DocEditor extends React.Component {
     this.state = {
       previewWidth: 720,
       previewHeight: 0,
-      currentTextKey: null,
       textParams: _.clone(this.defaultTextParams),
       texts: TextStore.texts
     }
@@ -43,6 +42,10 @@ class DocEditor extends React.Component {
 
   componentWillUnmount() {
     TextStore.removeListener(this.textChangeHandler);
+  }
+
+  isCurrentText(key) {
+    return key === this.state.textParams.key;
   }
 
   handleTextChange() {
@@ -66,10 +69,8 @@ class DocEditor extends React.Component {
     const text = TextStore.findText(key);
     this.setState((state) => {
       if (text) {
-        state.currentTextKey = key;
         state.textParams = text;
       } else {
-        state.currentTextKey = null;
         state.textParams = {};
       }
       return state;
@@ -80,19 +81,23 @@ class DocEditor extends React.Component {
     this.setState((state) => {
       state.textParams[key] = _.isNaN(parseInt(value)) ? value : parseInt(value);
       return state;
+    }, () => {
+      if (TextStore.exists(this.state.textParams.key)) {
+        this.handleUpdateText();
+      }
     });
-    if (this.props.currentTextKey) {
-      this.handleUpdateText();
-    }
   }
 
   handleUpdateText() {
-    const text = this.state.textParams;
+    const text = _.clone(this.state.textParams);
     if (!text.key || !text.value) {
       return;
     }
+    const exists = TextStore.exists(text.key);
     SettingAction.update(text);
-    this.setState({ textParams: _.clone(this.defaultTextParams) });
+    if (!exists) {
+      this.setState({ textParams: _.clone(this.defaultTextParams) });
+    }
   }
 
   render() {
@@ -111,7 +116,7 @@ class DocEditor extends React.Component {
                   fontSize: `${text.fontSize}px`
                 };
                 let className = 'draggable-text';
-                if (text.key === this.state.currentTextKey) {
+                if (this.isCurrentText(text.key)) {
                   className += ' selected';
                 }
 
@@ -138,7 +143,6 @@ class DocEditor extends React.Component {
           <Setting
             text={this.state.textParams}
             texts={this.state.texts}
-            currentTextKey={this.state.currentTextKey}
             handleInputChange={this.handleInputChange.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)} />

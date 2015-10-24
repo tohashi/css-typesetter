@@ -45,6 +45,10 @@ class TextStore extends EventEmitter {
     return text;
   }
 
+  exists(key) {
+    return !!this.findText(key);
+  }
+
   get texts() {
     return texts;
   }

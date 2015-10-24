@@ -11,14 +11,18 @@ export default class Setting extends React.Component {
     this.inputChangeHandler = this.handleInputChange.bind(this);
   }
 
+  isCurrentText(key) {
+    return key === this.props.text.key;
+  }
+
   handleRemoveText(key) {
-    SettingAction.remove(this.props.currentTextKey);
+    SettingAction.remove(this.props.text.key);
     this.props.handleSelectText(null);
   }
 
   handleSelectText(key) {
     this.props.handleSelectText(
-      this.props.currentTextKey === key ? null : key
+      this.isCurrentText(key) ? null : key
     );
   }
 
@@ -37,7 +41,7 @@ export default class Setting extends React.Component {
           <li>key<input name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></li>
         </ul>
         {(() => {
-          if (!this.props.currentTextKey) {
+          if (!TextStore.exists(this.props.text.key)) {
             return (
               <button onClick={this.props.handleUpdateText}>add</button>
             );
@@ -51,7 +55,7 @@ export default class Setting extends React.Component {
           {(() => {
             return this.props.texts.map((text) => {
               let className = 'text-item'
-              if (text.key === this.props.currentTextKey) {
+              if (this.isCurrentText(text.key)) {
                 className += ' selected';
               }
               return (
