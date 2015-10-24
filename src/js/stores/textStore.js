@@ -19,6 +19,12 @@ function updateTexts(params) {
   }
 }
 
+function removeText(key) {
+  texts = texts.filter((text) => {
+    return text.key !== key;
+  });
+}
+
 class TextStore extends EventEmitter {
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -52,7 +58,12 @@ instance.dispatchToken = Dispatcher.register((action) => {
     updateTexts(action.params);
     instance.emitChange();
     break;
+  case ActionTypes.REMOVE_TEXT:
+    removeText(action.key);
+    instance.emitChange();
+    break;
   }
+
 });
 
 export default instance;

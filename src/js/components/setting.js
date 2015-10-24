@@ -29,6 +29,11 @@ export default class Setting extends React.Component {
     SettingAction.add(_.pick.apply(_, [this.state].concat(Object.keys(this.defaultTextParams))));
   }
 
+  handleRemoveText(key) {
+    SettingAction.remove(this.props.currentTextKey);
+    this.props.handleSelectText(null);
+  }
+
   handleSelectText(key) {
     this.props.handleSelectText(key);
   }
@@ -49,6 +54,9 @@ export default class Setting extends React.Component {
               <button onClick={this.handleAddText.bind(this)}>add</button>
             );
           }
+          return (
+            <button onClick={this.handleRemoveText.bind(this)}>remove</button>
+          );
         }())}
 
         <ul className="text-list">

@@ -7,6 +7,13 @@ export default {
       actionType: ActionTypes.ADD_TEXT,
       params
     });
+  },
+
+  remove(key) {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.REMOVE_TEXT,
+      key
+    })
   }
 };
 
