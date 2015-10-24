@@ -16,7 +16,8 @@ class DocEditor extends React.Component {
       height: 0,
       value: '',
       key: '',
-      fontSize: 12
+      fontSize: 12,
+      scale: 1
     };
   }
 
@@ -85,7 +86,7 @@ class DocEditor extends React.Component {
 
   handleInputChange(key, value) {
     this.setState((state) => {
-      state.textParams[key] = _.isNaN(parseInt(value)) ? value : parseInt(value);
+      state.textParams[key] = value;
       return state;
     }, () => {
       if (TextStore.exists(this.state.textParams.key)) {
@@ -107,7 +108,7 @@ class DocEditor extends React.Component {
   }
 
   changePreviewWidth(e) {
-    const previewWidth = e.target.value - 0;
+    const previewWidth = e.target.parentElement.querySelector('input').value - 0
     const prevZoom = this.state.previewWidth / this.state.imageWidth;
     const nextZoom = previewWidth / this.state.imageWidth;
     this.setState({
@@ -132,7 +133,8 @@ class DocEditor extends React.Component {
                 const textStyle = {
                   width: text.width || 'auto',
                   height: text.height || 'auto',
-                  fontSize: `${text.fontSize}px`
+                  fontSize: `${text.fontSize}px`,
+                  transform: `scale(${text.scale})`
                 };
                 let className = 'draggable-text';
                 if (this.isCurrentText(text.key)) {
@@ -145,7 +147,7 @@ class DocEditor extends React.Component {
                     ref={text.key}
                     key={text.key}
                     axis="both"
-                    start={{ x: text.x, y: text.y }}
+                    start={{ x: Number(text.x), y: Number(text.y) }}
                     moveOnStartChange={true}
                     onStop={this.handleStop.bind(this, text.key)}>
                     <div

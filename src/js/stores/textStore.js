@@ -26,6 +26,10 @@ function removeText(key) {
   });
 }
 
+function calcZoom(value, zoom, fix = 2) {
+  return Number(`${(Number(value) * zoom).toFixed(fix)}`);
+}
+
 class TextStore extends EventEmitter {
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -77,10 +81,11 @@ instance.dispatchToken = Dispatcher.register((action) => {
     const zoom = action.zoom;
     texts = texts.map((text) => {
       return _.extend({}, text, {
-        x: Math.round(text.x * zoom),
-        y: Math.round(text.y * zoom),
-        width: Math.round(text.width * zoom),
-        height: Math.round(text.height * zoom)
+        x: calcZoom(text.x, zoom),
+        y: calcZoom(text.y, zoom),
+        width: calcZoom(text.width, zoom),
+        height: calcZoom(text.height, zoom),
+        scale: calcZoom(text.scale, zoom, 4)
       });
     });
     instance.emitChange();
