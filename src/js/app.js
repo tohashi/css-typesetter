@@ -1,11 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Draggable from 'react-draggable';
+import _ from 'lodash';
 
 import Setting from './components/setting';
 import TextStore from './stores/textStore';
+import SettingAction from './actions/settingAction';
 
 class DocEditor extends React.Component {
+  get defaultTextParams() {
+    return {
+      x: 0,
+      y: 0,
+      value: '',
+      key: '',
+      fontSize: 12
+    };
+  }
+
   constructor() {
     super(...arguments);
     this.textChangeHandler = this.handleTextChange.bind(this);
@@ -13,6 +25,7 @@ class DocEditor extends React.Component {
       previewWidth: 720,
       previewHeight: 0,
       currentTextKey: null,
+      textParams: _.clone(this.defaultTextParams),
       texts: TextStore.texts
     }
   }
@@ -50,10 +63,34 @@ class DocEditor extends React.Component {
   }
 
   handleSelectText(key) {
-    this.setState({ currentTextKey: key });
+    const text = TextStore.findText(key);
+    this.setState((state) => {
+      if (text) {
+        state.currentTextKey = key;
+        state.textParams = text;
+      } else {
+        state.currentTextKey = null;
+        state.textParams = {};
+      }
+      return state;
+    });
   }
 
-  handleInputChange() {
+  handleInputChange(key, value) {
+    this.setState((state) => {
+      state.textParams[key] = value;
+      return state;
+    });
+    this.handleUpdateText();
+  }
+
+  handleUpdateText() {
+    const text = this.state.textParams;
+    if (!text.key || !text.value) {
+      return;
+    }
+    SettingAction.update(text);
+    this.setState({ textParams: _.clone(this.defaultTextParams) });
   }
 
   render() {
@@ -97,9 +134,11 @@ class DocEditor extends React.Component {
           </div>
 
           <Setting
+            text={this.state.textParams}
             texts={this.state.texts}
             currentTextKey={this.state.currentTextKey}
-            handleChange={this.handleInputChange.bind(this)}
+            handleInputChange={this.handleInputChange.bind(this)}
+            handleUpdateText={this.handleUpdateText.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)} />
         </div>
 

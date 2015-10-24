@@ -38,7 +38,7 @@ class TextStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  getCurrentText(key) {
+  findText(key) {
     const text = texts.find((text) => {
       return text.key === key;
     });
@@ -54,7 +54,7 @@ const instance = new TextStore();
 
 instance.dispatchToken = Dispatcher.register((action) => {
   switch (action.actionType) {
-  case ActionTypes.ADD_TEXT:
+  case ActionTypes.UPDATE_TEXT:
     updateTexts(action.params);
     instance.emitChange();
     break;

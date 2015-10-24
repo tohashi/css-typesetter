@@ -2,9 +2,9 @@ import Dispatcher from '../dispatcher';
 import { ActionTypes } from '../constants'
 
 export default {
-  add(params) {
+  update(params) {
     Dispatcher.dispatch({
-      actionType: ActionTypes.ADD_TEXT,
+      actionType: ActionTypes.UPDATE_TEXT,
       params
     });
   },

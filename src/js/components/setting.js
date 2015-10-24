@@ -1,32 +1,14 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import _ from 'lodash';
 
 import TextStore from '../stores/textStore';
 import SettingAction from '../actions/settingAction';
 
 export default class Setting extends React.Component {
-  get defaultTextParams() {
-    return {
-      x: 0,
-      y: 0,
-      value: '',
-      key: '',
-      fontSize: 12
-    };
-  }
-
   constructor() {
     super(...arguments);
     this.linkState = LinkedStateMixin.linkState;
-    this.state = _.clone(this.defaultTextParams);
-  }
-
-  handleAddText() {
-    if (!this.state.key || !this.state.value) {
-      return;
-    }
-    SettingAction.add(_.pick.apply(_, [this.state].concat(Object.keys(this.defaultTextParams))));
+    this.inputChangeHandler = this.handleInputChange.bind(this);
   }
 
   handleRemoveText(key) {
@@ -38,20 +20,24 @@ export default class Setting extends React.Component {
     this.props.handleSelectText(key);
   }
 
+  handleInputChange(e) {
+    this.props.handleInputChange(e.target.name, e.target.value);
+  }
+
   render() {
     return (
       <div className="setting">
         <ul>
-          <li>x<input valueLink={this.linkState('x')} /></li>
-          <li>y<input valueLink={this.linkState('y')} /></li>
-          <li>font-size<input valueLink={this.linkState('fontSize')} /></li>
-          <li>value<input valueLink={this.linkState('value')} /></li>
-          <li>key<input valueLink={this.linkState('key')} /></li>
+          <li>x<input name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></li>
+          <li>y<input name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></li>
+          <li>font-size<input name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></li>
+          <li>value<input name="value" value={this.props.text.value} onChange={this.inputChangeHandler} /></li>
+          <li>key<input name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></li>
         </ul>
         {(() => {
           if (!this.props.currentTextKey) {
             return (
-              <button onClick={this.handleAddText.bind(this)}>add</button>
+              <button onClick={this.props.handleUpdateText}>add</button>
             );
           }
           return (
