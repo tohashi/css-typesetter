@@ -6,18 +6,23 @@ import TextStore from '../stores/textStore';
 import SettingAction from '../actions/settingAction';
 
 export default class Setting extends React.Component {
+  get defaultTextParams() {
+    return {
+      x: 0,
+      y: 0,
+      value: '',
+      key: '',
+      fontSize: 12
+    };
+  }
 
   constructor() {
     super(...arguments);
     this.textChangeHandler = this.handleTextChange.bind(this);
     this.linkState = LinkedStateMixin.linkState;
-    this.state = {
-      x: 0,
-      y: 0,
-      value: '',
-      key: '',
+    this.state = _.extend({
       texts: TextStore.texts
-    };
+    }, this.defaultTextParams);
   }
 
   componentDidMount() {
@@ -33,7 +38,7 @@ export default class Setting extends React.Component {
   }
 
   handleAddText() {
-    SettingAction.add(_.pick(this.state, 'x', 'y', 'value', 'key'));
+    SettingAction.add(_.pick.apply(_, [this.state].concat(Object.keys(this.defaultTextParams))));
   }
 
   render() {
@@ -42,6 +47,7 @@ export default class Setting extends React.Component {
         <ul>
           <li>x<input valueLink={this.linkState('x')} /></li>
           <li>y<input valueLink={this.linkState('y')} /></li>
+          <li>font-size<input valueLink={this.linkState('fontSize')} /></li>
           <li>value<input valueLink={this.linkState('value')} /></li>
           <li>key<input valueLink={this.linkState('key')} /></li>
         </ul>

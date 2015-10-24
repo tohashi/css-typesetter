@@ -47,17 +47,20 @@ class DocEditor extends React.Component {
     })
   }
   render() {
-    const style = {
+    const imageStyle = {
       width: `${this.state.previewWidth}px`,
       height: `${this.state.previewHeight}px`
     };
 
     return (
-      <div>
-        <div className="doc-style-editor">
-          <div className="doc-image" style={style}>
+      <div className="doc-style-editor">
+        <div className="doc-wrapper">
+          <div className="doc-image" style={imageStyle}>
             {(() => {
               return this.state.texts.map((text, i) => {
+                const textStyle = {
+                  fontSize: `${text.fontSize}px`
+                };
                 return (
                   <Draggable
                     ref={text.key}
@@ -66,7 +69,7 @@ class DocEditor extends React.Component {
                     start={{ x: text.x, y: text.y }}
                     moveOnStartChange={true}
                     onStop={this.handleStop.bind(this, text.key)}>
-                    <div>{text.value}</div>
+                    <div style={textStyle}>{text.value}</div>
                   </Draggable>
                 );
               });
