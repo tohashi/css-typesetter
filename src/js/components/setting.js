@@ -18,23 +18,8 @@ export default class Setting extends React.Component {
 
   constructor() {
     super(...arguments);
-    this.textChangeHandler = this.handleTextChange.bind(this);
     this.linkState = LinkedStateMixin.linkState;
-    this.state = _.extend({
-      texts: TextStore.texts
-    }, this.defaultTextParams);
-  }
-
-  componentDidMount() {
-    TextStore.addChangeListener(this.textChangeHandler);
-  }
-
-  componentWillUnmount() {
-    TextStore.removeListener(this.textChangeHandler);
-  }
-
-  handleTextChange() {
-    this.setState({ texts: TextStore.texts });
+    this.state = _.clone(this.defaultTextParams);
   }
 
   handleAddText() {
@@ -45,12 +30,7 @@ export default class Setting extends React.Component {
   }
 
   handleSelectText(key) {
-    this.setState((state) => {
-      const text = state.texts.find((text) => {
-        return text.key === key;
-      });
-      return _.extend(state, text);
-    });
+    this.props.handleSelectText(key);
   }
 
   render() {
@@ -63,13 +43,28 @@ export default class Setting extends React.Component {
           <li>value<input valueLink={this.linkState('value')} /></li>
           <li>key<input valueLink={this.linkState('key')} /></li>
         </ul>
-        <button onClick={this.handleAddText.bind(this)}>add</button>
+        {(() => {
+          if (!this.props.currentTextKey) {
+            return (
+              <button onClick={this.handleAddText.bind(this)}>add</button>
+            );
+          }
+        }())}
 
         <ul className="text-list">
           {(() => {
-            return this.state.texts.map((text) => {
+            return this.props.texts.map((text) => {
+              let className = 'text-item'
+              if (text.key === this.props.currentTextKey) {
+                className += ' selected';
+              }
               return (
-                <li key={text.key} onClick={this.handleSelectText.bind(this, text.key)}>{text.key}</li>
+                <li
+                  className={className}
+                  key={text.key}
+                  onClick={this.handleSelectText.bind(this, text.key)} >
+                  {text.key}
+                </li>
               );
             });
           }())}

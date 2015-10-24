@@ -12,6 +12,7 @@ class DocEditor extends React.Component {
     this.state = {
       previewWidth: 720,
       previewHeight: 0,
+      currentTextKey: null,
       texts: TextStore.texts
     }
   }
@@ -36,16 +37,25 @@ class DocEditor extends React.Component {
   }
 
   handleStop(key) {
-    this.setState({
-      texts: this.state.texts.map((text) => {
+    this.setState((state) => {
+      state.texts = state.texts.map((text) => {
         if (text.key === key) {
           text.x = this.refs[key].state.clientX;
           text.y = this.refs[key].state.clientY;
         }
         return text;
       })
+      return state;
     })
   }
+
+  handleSelectText(key) {
+    this.setState({ currentTextKey: key });
+  }
+
+  handleInputChange() {
+  }
+
   render() {
     const imageStyle = {
       width: `${this.state.previewWidth}px`,
@@ -61,6 +71,11 @@ class DocEditor extends React.Component {
                 const textStyle = {
                   fontSize: `${text.fontSize}px`
                 };
+                let className = 'draggable-text';
+                if (text.key === this.state.currentTextKey) {
+                  className += ' selected';
+                }
+
                 return (
                   <Draggable
                     ref={text.key}
@@ -69,14 +84,23 @@ class DocEditor extends React.Component {
                     start={{ x: text.x, y: text.y }}
                     moveOnStartChange={true}
                     onStop={this.handleStop.bind(this, text.key)}>
-                    <div style={textStyle}>{text.value}</div>
+                    <div
+                      className={className}
+                      style={textStyle}
+                      onClick={this.handleSelectText.bind(this, text.key)} >
+                      {text.value}
+                    </div>
                   </Draggable>
                 );
               });
             })()}
           </div>
 
-          <Setting />
+          <Setting
+            texts={this.state.texts}
+            currentTextKey={this.state.currentTextKey}
+            handleChange={this.handleInputChange.bind(this)}
+            handleSelectText={this.handleSelectText.bind(this)} />
         </div>
 
         <div className="result">

@@ -32,6 +32,13 @@ class TextStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
+  getCurrentText(key) {
+    const text = texts.find((text) => {
+      return text.key === key;
+    });
+    return text;
+  }
+
   get texts() {
     return texts;
   }

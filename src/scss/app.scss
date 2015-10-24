@@ -10,6 +10,10 @@ ul {
   }
 }
 
+.selected {
+  background: rgba(255, 0, 0, 0.5);
+}
+
 .doc-style-editor {
   margin: 10px;
 }
@@ -29,13 +33,14 @@ ul {
   background-size: 100% auto;
   position: relative;
   border: 1px solid #000;
-  div {
-    position: absolute;
-    left: 0;
-    top: 0;
-    border: 1px solid #000;
-    cursor: pointer;
-  }
+}
+
+.draggable-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 1px solid #000;
+  cursor: pointer;
 }
 
 .setting {
@@ -46,7 +51,7 @@ ul {
   float: left;
   border: 1px solid #000;
   .text-list {
-    li {
+    .text-item {
       border: 1px solid #000;
     }
   }
