@@ -28,6 +28,18 @@ export default {
       actionType: ActionTypes.CHANGE_ZOOM,
       zoom
     });
+  },
+
+  undo() {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.UNDO
+    });
+  },
+
+  redo() {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.REDO
+    });
   }
 };
 

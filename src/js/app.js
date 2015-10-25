@@ -72,7 +72,7 @@ class DocEditor extends React.Component {
       if (text) {
         state.textParams = text;
       } else {
-        state.textParams = {};
+        state.textParams = _.clone(this.defaultTextParams);
       }
       return state;
     });
@@ -110,6 +110,14 @@ class DocEditor extends React.Component {
       previewHeight: nextZoom * this.state.imageHeight 
     });
     SettingAction.changeZoom(1 / (prevZoom / nextZoom));
+  }
+
+  handleUndo() {
+    SettingAction.undo();
+  }
+
+  handleRedo() {
+    SettingAction.redo();
   }
 
   render() {
@@ -160,6 +168,8 @@ class DocEditor extends React.Component {
             text={this.state.textParams}
             texts={this.state.texts}
             previewWidth={this.state.previewWidth}
+            handleUndo={this.handleUndo.bind(this)}
+            handleRedo={this.handleRedo.bind(this)}
             changePreviewWidth={this.changePreviewWidth.bind(this)}
             handleInputChange={this.handleInputChange.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}

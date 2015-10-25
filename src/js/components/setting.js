@@ -39,6 +39,22 @@ export default class Setting extends React.Component {
     return (
       <div className="setting">
         <div>
+          {(() => {
+            if (TextStore.undoable()) {
+              return (
+                <button onClick={this.props.handleUndo}>undo</button>
+              );
+            }
+          }())}
+          {(() => {
+            if (TextStore.redoable()) {
+              return (
+                <button onClick={this.props.handleRedo}>redo</button>
+              );
+            }
+          }())}
+        </div>
+        <div>
           previewWidth<input defaultValue={this.props.previewWidth} />
           <button onClick={this.props.changePreviewWidth}>change</button>
         </div>

@@ -6,6 +6,8 @@ import { ActionTypes } from '../constants'
 const CHANGE_EVENT = 'change';
 
 let texts = [];
+let textsHistory = [[]];
+let historyIdx = 0;
 
 function updateTexts(params) {
   texts = texts.map((text) => {
@@ -54,6 +56,14 @@ class TextStore extends EventEmitter {
     return !!this.findText(key);
   }
 
+  undoable() {
+    return textsHistory.length > 1 && historyIdx > 0;
+  }
+
+  redoable() {
+    return historyIdx !== Math.max(textsHistory.length - 1, 0);
+  }
+
   get texts() {
     return texts;
   }
@@ -90,8 +100,23 @@ instance.dispatchToken = Dispatcher.register((action) => {
     });
     instance.emitChange();
     break;
+  case ActionTypes.UNDO:
+    historyIdx -= 1;
+    texts = _.cloneDeep(textsHistory[historyIdx]);
+    instance.emitChange();
+    return;
+  case ActionTypes.REDO:
+    historyIdx += 1;
+    texts = _.cloneDeep(textsHistory[historyIdx]);
+    instance.emitChange();
+    return;
   }
 
+  if (TextStore.redoable) {
+    textsHistory.splice(historyIdx);
+  }
+  textsHistory.push(_.cloneDeep(texts));
+  historyIdx = textsHistory.length - 1;
 });
 
 export default instance;
