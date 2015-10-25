@@ -60,16 +60,10 @@ class DocEditor extends React.Component {
   }
 
   handleStop(key) {
-    this.setState((state) => {
-      state.texts = state.texts.map((text) => {
-        if (text.key === key) {
-          text.x = this.refs[key].state.clientX;
-          text.y = this.refs[key].state.clientY;
-        }
-        return text;
-      })
-      return state;
-    })
+    const text = TextStore.findText(key);
+    text.x = this.refs[key].state.clientX;
+    text.y = this.refs[key].state.clientY;
+    SettingAction.update(text);
   }
 
   handleSelectText(key) {
