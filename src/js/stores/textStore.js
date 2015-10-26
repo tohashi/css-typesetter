@@ -10,14 +10,15 @@ let textsHistory = [[]];
 let historyIdx = 0;
 
 function updateTexts(params) {
+  let added = true;
   texts = texts.map((text) => {
     if (text.key === params.key) {
       text = params;
-      params = null;
+      added = false;
     }
     return text;
   });
-  if (params) {
+  if (added) {
     texts.push(params);
   }
 }
