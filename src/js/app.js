@@ -180,7 +180,7 @@ class DocEditor extends React.Component {
           {(() => {
             return this.state.texts.map((text, i) => {
               return (
-                <p key={text.key}>{`.${text.key} { left: ${text.x}px; top: ${text.y}px; }`}</p>
+                <p key={text.key}>{`.${text.key} { left: ${text.x}px; top: ${text.y}px; width: ${text.width}px; height: ${text.height}; font-size: ${text.fontSize}px; transform: scale(${text.scale}); }`}</p>
               );
             });
           })()}

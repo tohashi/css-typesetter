@@ -28,7 +28,7 @@ function removeText(key) {
   });
 }
 
-function calcZoom(value, zoom, fix = 2) {
+function calcZoom(value, zoom, fix = 0) {
   return Number(`${(Number(value) * zoom).toFixed(fix)}`);
 }
 
