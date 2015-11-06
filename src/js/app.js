@@ -22,7 +22,7 @@ class DocEditor extends React.Component {
   }
 
   constructor() {
-    super(...arguments);
+    super(arguments);
     this.textChangeHandler = this.handleTextChange.bind(this);
     this.state = {
       previewWidth: 720,

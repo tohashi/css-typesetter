@@ -6,7 +6,7 @@ import SettingAction from '../actions/settingAction';
 
 export default class Setting extends React.Component {
   constructor() {
-    super(...arguments);
+    super();
     this.linkState = LinkedStateMixin.linkState;
     this.inputChangeHandler = this.handleInputChange.bind(this);
   }
@@ -45,14 +45,14 @@ export default class Setting extends React.Component {
                 <button onClick={this.props.handleUndo}>undo</button>
               );
             }
-          }())}
+          })()}
           {(() => {
             if (TextStore.redoable()) {
               return (
                 <button onClick={this.props.handleRedo}>redo</button>
               );
             }
-          }())}
+          })()}
         </div>
         <div>
           previewWidth<input defaultValue={this.props.previewWidth} />
@@ -80,7 +80,7 @@ export default class Setting extends React.Component {
               <button onClick={this.handleRemoveText.bind(this)}>remove</button>
             </div>
           );
-        }())}
+        })()}
 
         <ul className="text-list">
           {(() => {
@@ -98,7 +98,7 @@ export default class Setting extends React.Component {
                 </li>
               );
             });
-          }())}
+          })()}
         </ul>
       </div>
     );
