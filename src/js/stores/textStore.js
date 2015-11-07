@@ -73,12 +73,15 @@ class TextStore extends EventEmitter {
     return {
       x: 0,
       y: 0,
-      width: 0,
-      height: 0,
+      width: 160,
+      height: 20,
       value: '',
       key: '',
       fontSize: 12,
-      scale: 1
+      scale: 1,
+      lineHeight: null,
+      maxLen: null,
+      maxLine: 1,
     };
   }
 }

@@ -123,8 +123,9 @@ class DocEditor extends React.Component {
                 const textStyle = {
                   width: text.width || 'auto',
                   height: text.height || 'auto',
-                  fontSize: `${text.fontSize}px`,
-                  transform: `scale(${text.scale})`
+                  fontSize: text.fontSize,
+                  transform: `scale(${text.scale})`,
+                  lineHeight: text.lineHeight ? `${text.lineHeight}px` : 'inherit'
                 };
                 let className = 'draggable-text';
                 if (this.isCurrentText(text.key)) {

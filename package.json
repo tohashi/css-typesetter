@@ -22,7 +22,6 @@
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
     "react": "^0.14.0",
-    "react-addons-linked-state-mixin": "^0.14.2",
     "react-dom": "^0.14.0",
     "react-draggable": "^1.0.1"
   },

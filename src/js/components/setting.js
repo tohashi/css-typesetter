@@ -1,5 +1,4 @@
 import React from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import TextStore from '../stores/textStore';
 import TextAction from '../actions/textAction';
@@ -7,7 +6,6 @@ import TextAction from '../actions/textAction';
 export default class Setting extends React.Component {
   constructor() {
     super();
-    this.linkState = LinkedStateMixin.linkState;
     this.inputChangeHandler = this.handleInputChange.bind(this);
   }
 
@@ -67,6 +65,9 @@ export default class Setting extends React.Component {
           <li>height<input name="height" value={this.props.text.height} onChange={this.inputChangeHandler} /></li>
           <li>font-size<input name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></li>
           <li>scale<input name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></li>
+          <li>line-height<input name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></li>
+          <li>maxLen<input name="maxLen" value={this.props.text.maxLen} onChange={this.inputChangeHandler} /></li>
+          <li>maxLine<input name="maxLine" value={this.props.text.maxLine} onChange={this.inputChangeHandler} /></li>
         </ul>
         {(() => {
           if (!TextStore.exists(this.props.text.key)) {
