@@ -9,19 +9,6 @@ import Setting from './components/setting';
 import PublishArea from './components/publishArea';
 
 class DocEditor extends React.Component {
-  get defaultTextParams() {
-    return {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-      value: '',
-      key: '',
-      fontSize: 12,
-      scale: 1
-    };
-  }
-
   constructor() {
     super();
     this.textChangeHandler = this.handleTextChange.bind(this);
@@ -30,7 +17,7 @@ class DocEditor extends React.Component {
       previewHeight: 0,
       imageWidth: 0,
       imageHeight: 0,
-      textParams: _.clone(this.defaultTextParams),
+      textParams: TextStore.defaultParams,
       texts: TextStore.texts
     }
   }
@@ -73,7 +60,7 @@ class DocEditor extends React.Component {
       if (text) {
         state.textParams = text;
       } else {
-        state.textParams = _.clone(this.defaultTextParams);
+        state.textParams = TextStore.defaultParams;
       }
       return state;
     });
@@ -91,14 +78,14 @@ class DocEditor extends React.Component {
   }
 
   handleUpdateText() {
-    const text = _.clone(this.state.textParams);
+    const text = this.state.textParams;
     if (!text.key || !text.value) {
       return;
     }
     const exists = TextStore.exists(text.key);
     TextAction.update(text);
     if (!exists) {
-      this.setState({ textParams: _.clone(this.defaultTextParams) });
+      this.setState({ textParams: TextStore.defaultParams });
     }
   }
 
