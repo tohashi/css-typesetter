@@ -56,17 +56,46 @@ export default class Setting extends React.Component {
           previewWidth<input defaultValue={this.props.previewWidth} />
           <button onClick={this.props.changePreviewWidth}>change</button>
         </div>
-        <ul>
-          <li>class<input name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></li>
-          <li>value<input name="value" value={this.props.text.value} onChange={this.inputChangeHandler} /></li>
-          <li>x<input name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></li>
-          <li>y<input name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></li>
-          <li>width<input name="width" value={this.props.text.width} onChange={this.inputChangeHandler} /></li>
-          <li>height<input name="height" value={this.props.text.height} onChange={this.inputChangeHandler} /></li>
-          <li>font-size<input name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></li>
-          <li>scale<input name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></li>
-          <li>line-height<input name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></li>
-        </ul>
+        <table>
+          <tbody>
+            <tr>
+              <td>class</td>
+              <td><input type="text" name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>value</td>
+              <td><input type="text" name="value" value={this.props.text.value} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>x</td>
+              <td><input type="number" name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>y</td>
+              <td><input type="number" name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td><input type="number" name="width" value={this.props.text.width} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>height</td>
+              <td><input type="number" name="height" value={this.props.text.height} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>font-size</td>
+              <td><input type="number" name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>scale</td>
+              <td><input type="number" name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>line-height</td>
+              <td><input type="number" name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></td>
+            </tr>
+          </tbody>
+        </table>
         {(() => {
           if (!TextStore.exists(this.props.text.key)) {
             return (
