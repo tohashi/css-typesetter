@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import Draggable from 'react-draggable';
 import _ from 'lodash';
 
-import Setting from './components/setting';
 import TextStore from './stores/textStore';
 import TextAction from './actions/textAction';
+import Setting from './components/setting';
+import PublishArea from './components/publishArea';
 
 class DocEditor extends React.Component {
   get defaultTextParams() {
@@ -22,7 +23,7 @@ class DocEditor extends React.Component {
   }
 
   constructor() {
-    super(arguments);
+    super();
     this.textChangeHandler = this.handleTextChange.bind(this);
     this.state = {
       previewWidth: 720,
@@ -151,11 +152,13 @@ class DocEditor extends React.Component {
                     axis="both"
                     start={{ x: Number(text.x), y: Number(text.y) }}
                     moveOnStartChange={true}
-                    onStop={this.handleStop.bind(this, text.key)}>
+                    onStop={this.handleStop.bind(this, text.key)}
+                  >
                     <div
                       className={className}
                       style={textStyle}
-                      onClick={this.handleSelectText.bind(this, text.key)} >
+                      onClick={this.handleSelectText.bind(this, text.key)}
+                    >
                       {text.value}
                     </div>
                   </Draggable>
@@ -176,16 +179,7 @@ class DocEditor extends React.Component {
             handleSelectText={this.handleSelectText.bind(this)} />
         </div>
 
-        <div className="result">
-          {(() => {
-            return this.state.texts.map((text, i) => {
-              return (
-                <p key={text.key}>{`.${text.key} { left: ${text.x}px; top: ${text.y}px; width: ${text.width}px; height: ${text.height}; font-size: ${text.fontSize}px; transform: scale(${text.scale}); }`}</p>
-              );
-            });
-          })()}
-        </div>
-
+        <PublishArea texts={this.state.texts} />
       </div>
     );
   }
