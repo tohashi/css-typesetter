@@ -2,7 +2,7 @@ import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import TextStore from '../stores/textStore';
-import SettingAction from '../actions/settingAction';
+import TextAction from '../actions/textAction';
 
 export default class Setting extends React.Component {
   constructor() {
@@ -16,12 +16,12 @@ export default class Setting extends React.Component {
   }
 
   handleRemoveText(key) {
-    SettingAction.remove(this.props.text.key);
+    TextAction.remove(this.props.text.key);
     this.props.handleSelectText(null);
   }
 
   handleCopyText(key) {
-    SettingAction.copy(this.props.text.key);
+    TextAction.copy(this.props.text.key);
     this.props.handleSelectText(null);
   }
 

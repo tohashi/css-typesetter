@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import Setting from './components/setting';
 import TextStore from './stores/textStore';
-import SettingAction from './actions/settingAction';
+import TextAction from './actions/textAction';
 
 class DocEditor extends React.Component {
   get defaultTextParams() {
@@ -63,7 +63,7 @@ class DocEditor extends React.Component {
     const text = TextStore.findText(key);
     text.x = this.refs[key].state.clientX;
     text.y = this.refs[key].state.clientY;
-    SettingAction.update(text);
+    TextAction.update(text);
   }
 
   handleSelectText(key) {
@@ -95,7 +95,7 @@ class DocEditor extends React.Component {
       return;
     }
     const exists = TextStore.exists(text.key);
-    SettingAction.update(text);
+    TextAction.update(text);
     if (!exists) {
       this.setState({ textParams: _.clone(this.defaultTextParams) });
     }
@@ -109,15 +109,15 @@ class DocEditor extends React.Component {
       previewWidth,
       previewHeight: nextZoom * this.state.imageHeight 
     });
-    SettingAction.changeZoom(1 / (prevZoom / nextZoom));
+    TextAction.changeZoom(1 / (prevZoom / nextZoom));
   }
 
   handleUndo() {
-    SettingAction.undo();
+    TextAction.undo();
   }
 
   handleRedo() {
-    SettingAction.redo();
+    TextAction.redo();
   }
 
   render() {
