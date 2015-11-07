@@ -5,7 +5,7 @@ import { ActionTypes } from '../constants'
 
 const CHANGE_EVENT = 'change';
 
-let texts = [];
+let texts = loadFromLS() || [];
 let textsHistory = [[]];
 let historyIdx = 0;
 
@@ -31,6 +31,14 @@ function removeText(key) {
 
 function calcZoom(value, zoom, fix = 0) {
   return Number(`${(Number(value) * zoom).toFixed(fix)}`);
+}
+
+function saveToLS() {
+  localStorage.setItem('texts', JSON.stringify(texts));
+}
+
+function loadFromLS() {
+  return JSON.parse(localStorage.getItem('texts'));
 }
 
 class TextStore extends EventEmitter {
@@ -79,9 +87,7 @@ class TextStore extends EventEmitter {
       key: '',
       fontSize: 12,
       scale: 1,
-      lineHeight: null,
-      maxLen: null,
-      maxLine: 1,
+      lineHeight: null
     };
   }
 }
@@ -132,6 +138,7 @@ instance.dispatchToken = Dispatcher.register((action) => {
   if (TextStore.redoable) {
     textsHistory.splice(historyIdx);
   }
+  saveToLS();
   textsHistory.push(_.cloneDeep(texts));
   historyIdx = textsHistory.length - 1;
 });

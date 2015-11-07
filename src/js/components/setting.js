@@ -66,8 +66,6 @@ export default class Setting extends React.Component {
           <li>font-size<input name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></li>
           <li>scale<input name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></li>
           <li>line-height<input name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></li>
-          <li>maxLen<input name="maxLen" value={this.props.text.maxLen} onChange={this.inputChangeHandler} /></li>
-          <li>maxLine<input name="maxLine" value={this.props.text.maxLine} onChange={this.inputChangeHandler} /></li>
         </ul>
         {(() => {
           if (!TextStore.exists(this.props.text.key)) {
