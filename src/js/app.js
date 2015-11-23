@@ -123,6 +123,30 @@ class DocEditor extends React.Component {
     TextAction.redo();
   }
 
+  createDraggableInner(text) {
+    const textStyle = {
+      width: text.width || 'auto',
+      height: text.height || 'auto',
+      fontSize: text.fontSize,
+      transform: `scale(${text.scale})`,
+      lineHeight: text.lineHeight ? `${text.lineHeight}px` : 'inherit'
+    };
+    let className = 'draggable-text';
+    if (this.isCurrentText(text.key)) {
+      className += ' selected';
+      textStyle.zIndex = 1;
+    }
+    return (
+      <div
+        className={className}
+        style={textStyle}
+        onClick={this.handleSelectText.bind(this, text.key)}
+      >
+        {text.value}
+      </div>
+    );
+  }
+
   render() {
     const imageStyle = {
       width: `${this.state.previewWidth}px`,
@@ -135,19 +159,6 @@ class DocEditor extends React.Component {
           <div className="doc-image" style={imageStyle}>
             {(() => {
               return this.state.texts.map((text, i) => {
-                const textStyle = {
-                  width: text.width || 'auto',
-                  height: text.height || 'auto',
-                  fontSize: text.fontSize,
-                  transform: `scale(${text.scale})`,
-                  lineHeight: text.lineHeight ? `${text.lineHeight}px` : 'inherit'
-                };
-                let className = 'draggable-text';
-                if (this.isCurrentText(text.key)) {
-                  className += ' selected';
-                  textStyle.zIndex = 1;
-                }
-
                 return (
                   <Draggable
                     ref={text.key}
@@ -157,13 +168,7 @@ class DocEditor extends React.Component {
                     moveOnStartChange={true}
                     onStop={this.handleStop.bind(this, text.key)}
                   >
-                    <div
-                      className={className}
-                      style={textStyle}
-                      onClick={this.handleSelectText.bind(this, text.key)}
-                    >
-                      {text.value}
-                    </div>
+                    {this.createDraggableInner(text)}
                   </Draggable>
                 );
               });

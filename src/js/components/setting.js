@@ -8,6 +8,7 @@ export default class Setting extends React.Component {
   constructor() {
     super();
     this.inputChangeHandler = this.handleInputChange.bind(this);
+    this.checkedHandler = this.handleChecked.bind(this);
   }
 
   isCurrentText(key) {
@@ -40,6 +41,10 @@ export default class Setting extends React.Component {
     this.props.handleInputChange(e.target.name, value);
   }
 
+  handleChecked(e) {
+    this.props.handleInputChange(e.target.name, e.target.checked);
+  }
+
   render() {
     return (
       <div className="setting">
@@ -65,6 +70,15 @@ export default class Setting extends React.Component {
         </div>
         <table>
           <tbody>
+            <tr>
+              <td>split</td>
+              <td>
+                <label>
+                  <input type="checkbox" name="split" value={true} checked={this.props.text.split} onChange={this.checkedHandler} />
+                  split
+                </label>
+              </td>
+            </tr>
             <tr>
               <td>class</td>
               <td><input type="text" name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></td>
