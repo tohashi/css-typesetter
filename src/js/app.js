@@ -44,7 +44,12 @@ class DocEditor extends React.Component {
   }
 
   handleTextChange() {
-    this.setState({ texts: TextStore.texts });
+    const texts = TextStore.texts;
+    const currentKey = this.state.textParams.key;
+    this.setState({
+      textParams: _.cloneDeep(TextStore.findText(currentKey)) || this.state.textParams,
+      texts
+    });
   }
 
   handleStop(key) {

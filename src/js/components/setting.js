@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import TextStore from '../stores/textStore';
 import TextAction from '../actions/textAction';
@@ -30,7 +31,13 @@ export default class Setting extends React.Component {
   }
 
   handleInputChange(e) {
-    this.props.handleInputChange(e.target.name, e.target.value);
+    let value = e.target.value;
+    let parsedValue = parseInt(value);
+    if (_.isNumber(parsedValue) &&
+        !_.isNaN(parsedValue)) {
+      value = parsedValue
+    }
+    this.props.handleInputChange(e.target.name, value);
   }
 
   render() {
