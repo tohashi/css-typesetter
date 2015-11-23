@@ -129,12 +129,28 @@ class DocEditor extends React.Component {
       height: text.height || 'auto',
       fontSize: text.fontSize,
       transform: `scale(${text.scale})`,
-      lineHeight: text.lineHeight ? `${text.lineHeight}px` : 'inherit'
+      lineHeight: text.lineHeight ? `${text.lineHeight}px` : 'inherit',
+      letterSpacing: text.letterSpacing ? `${text.letterSpacing}` : 'inherit'
     };
     let className = 'draggable-text';
     if (this.isCurrentText(text.key)) {
       className += ' selected';
       textStyle.zIndex = 1;
+    }
+    if (text.split) {
+      return (
+        <ul
+          className={className}
+          style={textStyle}
+          onClick={this.handleSelectText.bind(this, text.key)}
+        >
+          {(() => {
+            return `${text.value}`.split('').map((char, i) => {
+              return <li className="split-char" key={`${text.value}-${i}`}>{char}</li>;
+            });
+          })()}
+        </ul>
+      );
     }
     return (
       <div

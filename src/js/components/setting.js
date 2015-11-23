@@ -115,6 +115,10 @@ export default class Setting extends React.Component {
               <td>line-height</td>
               <td><input type="number" name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></td>
             </tr>
+            <tr>
+              <td>letter-spacing</td>
+              <td><input type="number" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
+            </tr>
           </tbody>
         </table>
         {(() => {
