@@ -46,9 +46,19 @@ class DocEditor extends React.Component {
   handleTextChange() {
     const texts = TextStore.texts;
     const currentKey = this.state.textParams.key;
+    const newTextParams = _.cloneDeep(TextStore.findText(currentKey)) ||
+      this.state.textParams;
+
     this.setState({
-      textParams: _.cloneDeep(TextStore.findText(currentKey)) || this.state.textParams,
+      textParams: newTextParams,
       texts
+    }, () => {
+      texts.forEach((text) => {
+        this.refs[text.key].setState({
+          clientX: text.x,
+          clientY: text.y
+        });
+      });
     });
   }
 
