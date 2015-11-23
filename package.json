@@ -23,8 +23,7 @@
     "lodash": "^3.10.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "react-draggable": "github:tohashi/react-draggable",
-    "react-resizable": "github:tohashi/react-resizable"
+    "react-draggable": "github:tohashi/react-draggable"
   },
   "repository": {
     "type": "git",
