@@ -89,6 +89,7 @@ class TextStore extends EventEmitter {
       scale: 1,
       lineHeight: null,
       letterSpacing: null,
+      textAlign: 'left',
       split: false
     };
   }

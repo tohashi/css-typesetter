@@ -71,15 +71,6 @@ export default class Setting extends React.Component {
         <table>
           <tbody>
             <tr>
-              <td>split</td>
-              <td>
-                <label>
-                  <input type="checkbox" name="split" value={true} checked={this.props.text.split} onChange={this.checkedHandler} />
-                  split
-                </label>
-              </td>
-            </tr>
-            <tr>
               <td>class</td>
               <td><input type="text" name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></td>
             </tr>
@@ -118,6 +109,30 @@ export default class Setting extends React.Component {
             <tr>
               <td>letter-spacing</td>
               <td><input type="number" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
+            </tr>
+            <tr>
+              <td>text-align</td>
+              <td>
+                {(() => {
+                  return ['left', 'center', 'right'].map((type) => {
+                    return (
+                      <label key={type}>
+                        <input type="radio" name="textAlign" value={type} onChange={this.inputChangeHandler} checked={this.props.text.textAlign === type} />
+                        {type}
+                      </label>
+                    );
+                  });
+                })()}
+              </td>
+            </tr>
+            <tr>
+              <td>split</td>
+              <td>
+                <label>
+                  <input type="checkbox" name="split" value={true} checked={this.props.text.split} onChange={this.checkedHandler} />
+                  split
+                </label>
+              </td>
             </tr>
           </tbody>
         </table>
