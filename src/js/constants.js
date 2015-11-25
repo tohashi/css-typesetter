@@ -6,7 +6,8 @@ const ActionTypes = keyMirror({
   COPY_TEXT: null,
   CHANGE_ZOOM: null,
   UNDO: null,
-  REDO: null
+  REDO: null,
+  IMPORT: null
 });
 
 export { ActionTypes };

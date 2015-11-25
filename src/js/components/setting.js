@@ -139,13 +139,13 @@ export default class Setting extends React.Component {
         {(() => {
           if (!TextStore.exists(this.props.text.key)) {
             return (
-              <button onClick={this.props.handleUpdateText}>add</button>
+              <button className="add-btn" onClick={this.props.handleUpdateText}>add</button>
             );
           }
           return (
             <div>
-              <button onClick={this.handleCopyText.bind(this)}>copy</button>
-              <button onClick={this.handleRemoveText.bind(this)}>remove</button>
+              <button className="copy-btn" onClick={this.handleCopyText.bind(this)}>copy</button>
+              <button className="remove-btn" onClick={this.handleRemoveText.bind(this)}>remove</button>
             </div>
           );
         })()}

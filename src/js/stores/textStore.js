@@ -136,6 +136,16 @@ instance.dispatchToken = Dispatcher.register((action) => {
     texts = _.cloneDeep(textsHistory[historyIdx]);
     instance.emitChange();
     return;
+  case ActionTypes.IMPORT:
+    let data = [];
+    try {
+      data = JSON.parse(action.json);
+    } catch (e) {
+      throw Error('parse error');
+    }
+    texts = data;
+    instance.emitChange();
+    break;
   }
 
   if (TextStore.redoable) {

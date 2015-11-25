@@ -40,6 +40,13 @@ export default {
     Dispatcher.dispatch({
       actionType: ActionTypes.REDO
     });
+  },
+
+  import(json) {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.IMPORT,
+      json
+    });
   }
 };
 

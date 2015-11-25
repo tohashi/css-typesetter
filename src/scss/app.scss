@@ -62,8 +62,19 @@ ul {
       border: 1px solid #000;
     }
   }
+  .add-btn,
+  .copy-btn,
+  .remove-btn {
+    padding: 4px 10px;
+    font-size: 18px;
+  }
 }
 
 .result {
   clear: both;
+  margin: 20px auto 40px;
+  textarea {
+    width: 540px;
+    height: 200px;
+  }
 }

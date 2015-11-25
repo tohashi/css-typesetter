@@ -1,6 +1,31 @@
 import React from 'react';
+import TextStore from '../stores/textStore';
+import TextAction from '../actions/textAction';
 
 export default class PublishArea extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      json: ''
+    }
+  }
+
+  handleInput(e) {
+    this.setState({
+      json: e.target.value
+    });
+  }
+
+  handleImport() {
+    TextAction.import(this.state.json);
+  }
+
+  handleExport() {
+    this.setState({
+      json: JSON.stringify(TextStore.texts)
+    });
+  }
+
   render() {
     return (
       <div className="result">
@@ -22,6 +47,14 @@ export default class PublishArea extends React.Component {
             );
           });
         })()}
+
+        <div className="json-export">
+          <div>
+            <button onClick={this.handleImport.bind(this)}>import</button>
+            <button onClick={this.handleExport.bind(this)}>export</button>
+          </div>
+          <textarea value={this.state.json} onChange={this.handleInput.bind(this)} />
+        </div>
       </div>
     );
   }
