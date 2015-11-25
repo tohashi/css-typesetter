@@ -12,7 +12,7 @@ let historyIdx = 0;
 function updateTexts(params) {
   let added = true;
   texts = texts.map((text) => {
-    if (text.key === params.key) {
+    if (text.id === params.id) {
       text = params;
       added = false;
     }
@@ -23,9 +23,9 @@ function updateTexts(params) {
   }
 }
 
-function removeText(key) {
+function removeText(id) {
   texts = texts.filter((text) => {
-    return text.key !== key;
+    return text.id !== id;
   });
 }
 
@@ -41,6 +41,14 @@ function loadFromLS() {
   return JSON.parse(localStorage.getItem('texts'));
 }
 
+function uniqueId() {
+  const id = _.uniqueId('text_');
+  if (instance.exists(id)) {
+    return uniqueId();
+  }
+  return id;
+}
+
 class TextStore extends EventEmitter {
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -54,15 +62,15 @@ class TextStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  findText(key) {
+  findText(id) {
     const text = texts.find((text) => {
-      return text.key === key;
+      return text.id === id;
     });
     return text;
   }
 
-  exists(key) {
-    return !!this.findText(key);
+  exists(id) {
+    return !!this.findText(id);
   }
 
   undoable() {
@@ -79,6 +87,7 @@ class TextStore extends EventEmitter {
 
   get defaultParams() {
     return {
+      id: _.uniqueId('text-'),
       x: 0,
       y: 0,
       width: 160,
@@ -104,11 +113,11 @@ instance.dispatchToken = Dispatcher.register((action) => {
     instance.emitChange();
     break;
   case ActionTypes.REMOVE_TEXT:
-    removeText(action.key);
+    removeText(action.id);
     instance.emitChange();
     break;
   case ActionTypes.COPY_TEXT:
-    const text = _.clone(instance.findText(action.key));
+    const text = _.clone(instance.findText(action.id));
     text.key += `-${_.uniqueId()}`
     updateTexts(text);
     instance.emitChange();

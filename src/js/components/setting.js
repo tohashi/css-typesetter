@@ -11,23 +11,23 @@ export default class Setting extends React.Component {
     this.checkedHandler = this.handleChecked.bind(this);
   }
 
-  isCurrentText(key) {
-    return key === this.props.text.key;
+  isCurrentText(id) {
+    return id === this.props.text.id;
   }
 
-  handleRemoveText(key) {
-    TextAction.remove(this.props.text.key);
+  handleRemoveText(id) {
+    TextAction.remove(this.props.text.id);
     this.props.handleSelectText(null);
   }
 
-  handleCopyText(key) {
-    TextAction.copy(this.props.text.key);
+  handleCopyText(id) {
+    TextAction.copy(this.props.text.id);
     this.props.handleSelectText(null);
   }
 
-  handleSelectText(key) {
+  handleSelectText(id) {
     this.props.handleSelectText(
-      this.isCurrentText(key) ? null : key
+      this.isCurrentText(id) ? null : id
     );
   }
 
@@ -137,7 +137,7 @@ export default class Setting extends React.Component {
           </tbody>
         </table>
         {(() => {
-          if (!TextStore.exists(this.props.text.key)) {
+          if (!TextStore.exists(this.props.text.id)) {
             return (
               <button className="add-btn" onClick={this.props.handleUpdateText}>add</button>
             );
@@ -154,14 +154,14 @@ export default class Setting extends React.Component {
           {(() => {
             return this.props.texts.map((text) => {
               let className = 'text-item'
-              if (this.isCurrentText(text.key)) {
+              if (this.isCurrentText(text.id)) {
                 className += ' selected';
               }
               return (
                 <li
                   className={className}
-                  key={text.key}
-                  onClick={this.handleSelectText.bind(this, text.key)} >
+                  key={text.id}
+                  onClick={this.handleSelectText.bind(this, text.id)} >
                   {text.key}
                 </li>
               );

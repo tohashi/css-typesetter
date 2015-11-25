@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import TextStore from '../stores/textStore';
 import TextAction from '../actions/textAction';
 
@@ -39,19 +40,20 @@ export default class PublishArea extends React.Component {
                       font-size: ${text.fontSize}px;`
 
             if (text.scale !== 1) {
-              css += `transform: scale(${text.scale});`;
+              css += ` transform: scale(${text.scale});`;
             }
-            if (text.lineHeight != null) {
-              css += `line-height: ${text.lineHeight};`;
+            if (_.isNumber(text.lineHeight)) {
+              css += ` line-height: ${text.lineHeight}px;`;
             }
-            if (text.letterSpacing != null) {
-              css += `letter-spacing: ${text.letterSpacing};`;
+            if (_.isNumber(text.letterSpacing)) {
+              css += ` letter-spacing: ${text.letterSpacing}px;`;
             }
             if (text.textAlign != 'left') {
-              css += `text-align: ${text.textAlign};`;
+              css += ` text-align: ${text.textAlign};`;
             }
+            css += ' }';
             return (
-              <p key={text.key}>
+              <p key={text.id}>
                 {css}
               </p>
             );

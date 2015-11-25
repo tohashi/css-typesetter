@@ -39,13 +39,13 @@ class DocEditor extends React.Component {
     TextStore.removeListener(this.textChangeHandler);
   }
 
-  isCurrentText(key) {
-    return key === this.state.textParams.key;
+  isCurrentText(id) {
+    return id === this.state.textParams.id;
   }
 
   handleTextChange() {
     const texts = TextStore.texts;
-    const currentKey = this.state.textParams.key;
+    const currentKey = this.state.textParams.id;
     const newTextParams = _.cloneDeep(TextStore.findText(currentKey)) ||
       this.state.textParams;
 
@@ -54,7 +54,7 @@ class DocEditor extends React.Component {
       texts
     }, () => {
       texts.forEach((text) => {
-        this.refs[text.key].setState({
+        this.refs[text.id].setState({
           clientX: text.x,
           clientY: text.y
         });
@@ -62,15 +62,15 @@ class DocEditor extends React.Component {
     });
   }
 
-  handleStop(key) {
-    const text = TextStore.findText(key);
-    text.x = this.refs[key].state.clientX;
-    text.y = this.refs[key].state.clientY;
+  handleStop(id) {
+    const text = TextStore.findText(id);
+    text.x = this.refs[id].state.clientX;
+    text.y = this.refs[id].state.clientY;
     TextAction.update(text);
   }
 
-  handleSelectText(key) {
-    const text = TextStore.findText(key);
+  handleSelectText(id) {
+    const text = TextStore.findText(id);
     this.setState((state) => {
       if (text) {
         state.textParams = text;
@@ -81,12 +81,12 @@ class DocEditor extends React.Component {
     });
   }
 
-  handleInputChange(key, value) {
+  handleInputChange(id, value) {
     this.setState((state) => {
-      state.textParams[key] = value;
+      state.textParams[id] = value;
       return state;
     }, () => {
-      if (TextStore.exists(this.state.textParams.key)) {
+      if (TextStore.exists(this.state.textParams.id)) {
         this.handleUpdateText();
       }
     });
@@ -97,7 +97,7 @@ class DocEditor extends React.Component {
     if (!text.key || !text.value) {
       return;
     }
-    const exists = TextStore.exists(text.key);
+    const exists = TextStore.exists(text.id);
     TextAction.update(text);
     if (!exists) {
       this.setState({ textParams: TextStore.defaultParams });
@@ -134,7 +134,7 @@ class DocEditor extends React.Component {
       textAlign: text.textAlign
     };
     let className = 'draggable-text';
-    if (this.isCurrentText(text.key)) {
+    if (this.isCurrentText(text.id)) {
       className += ' selected';
       textStyle.zIndex = 1;
     }
@@ -143,7 +143,7 @@ class DocEditor extends React.Component {
         <ul
           className={className}
           style={textStyle}
-          onClick={this.handleSelectText.bind(this, text.key)}
+          onClick={this.handleSelectText.bind(this, text.id)}
         >
           {(() => {
             return `${text.value}`.split('').map((char, i) => {
@@ -157,7 +157,7 @@ class DocEditor extends React.Component {
       <div
         className={className}
         style={textStyle}
-        onClick={this.handleSelectText.bind(this, text.key)}
+        onClick={this.handleSelectText.bind(this, text.id)}
       >
         {text.value}
       </div>
@@ -178,12 +178,12 @@ class DocEditor extends React.Component {
               return this.state.texts.map((text, i) => {
                 return (
                   <Draggable
-                    ref={text.key}
-                    key={text.key}
+                    ref={text.id}
+                    key={text.id}
                     axis="both"
                     start={{ x: Number(text.x), y: Number(text.y) }}
                     moveOnStartChange={true}
-                    onStop={this.handleStop.bind(this, text.key)}
+                    onStop={this.handleStop.bind(this, text.id)}
                   >
                     {this.createDraggableInner(text)}
                   </Draggable>
