@@ -31,18 +31,28 @@ export default class PublishArea extends React.Component {
       <div className="result">
         {(() => {
           return this.props.texts.map((text, i) => {
+            let css = `.${text.key} {
+                      left: ${text.x}px;
+                      top: ${text.y}px;
+                      width: ${text.width}px;
+                      height: ${text.height};
+                      font-size: ${text.fontSize}px;`
+
+            if (text.scale !== 1) {
+              css += `transform: scale(${text.scale});`;
+            }
+            if (text.lineHeight != null) {
+              css += `line-height: ${text.lineHeight};`;
+            }
+            if (text.letterSpacing != null) {
+              css += `letter-spacing: ${text.letterSpacing};`;
+            }
+            if (text.textAlign != 'left') {
+              css += `text-align: ${text.textAlign};`;
+            }
             return (
               <p key={text.key}>
-                {
-                  `.${text.key} {
-                    left: ${text.x}px;
-                    top: ${text.y}px;
-                    width: ${text.width}px;
-                    height: ${text.height};
-                    font-size: ${text.fontSize}px;
-                    transform: scale(${text.scale});
-                  }`
-                }
+                {css}
               </p>
             );
           });

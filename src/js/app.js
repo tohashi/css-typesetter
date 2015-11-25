@@ -29,7 +29,7 @@ class DocEditor extends React.Component {
       this.setState({
         imageWidth: e.target.width,
         imageHeight: e.target.height,
-        previewHeight: ((this.state.previewWidth / e.target.width) * e.target.height) || 0
+        previewHeight: Math.round((this.state.previewWidth / e.target.width) * e.target.height) || 0
       });
     });
     TextStore.addChangeListener(this.textChangeHandler);
