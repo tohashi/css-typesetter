@@ -34,7 +34,7 @@ export default class Setting extends React.Component {
   handleInputChange(e) {
     let value = e.target.value;
     let parsedValue = parseInt(value);
-    if (_.isNumber(parsedValue) &&
+    if (e.type === 'number' && _.isNumber(parsedValue) &&
         !_.isNaN(parsedValue)) {
       value = parsedValue
     }
@@ -108,7 +108,7 @@ export default class Setting extends React.Component {
             </tr>
             <tr>
               <td>letter-spacing</td>
-              <td><input type="number" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
+              <td><input type="text" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
             </tr>
             <tr>
               <td>text-align</td>
