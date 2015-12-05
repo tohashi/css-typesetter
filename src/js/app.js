@@ -31,12 +31,20 @@ class DocEditor extends React.Component {
         imageHeight: e.target.height,
         previewHeight: Math.round((this.state.previewWidth / e.target.width) * e.target.height) || 0
       });
+      this.drawCanvas(img);
     });
     TextStore.addChangeListener(this.textChangeHandler);
   }
 
   componentWillUnmount() {
     TextStore.removeListener(this.textChangeHandler);
+  }
+
+  drawCanvas(img) {
+    const ctx = this.refs.canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, this.state.imageWidth, this.state.imageHeight);
+    let data = ctx.getImageData(0, 0, 1, 1);
+    console.log(data);
   }
 
   isCurrentText(id) {
@@ -174,6 +182,12 @@ class DocEditor extends React.Component {
       <div className="doc-style-editor">
         <div className="doc-wrapper">
           <div className="doc-image" style={imageStyle}>
+            <canvas
+              ref="canvas"
+              width={this.state.imageWidth}
+              height={this.state.imageHeight}
+              style={{width: `${this.state.previewWidth}px`, height: `${this.state.previewHeight}px`}}
+            />
             {(() => {
               return this.state.texts.map((text, i) => {
                 return (
