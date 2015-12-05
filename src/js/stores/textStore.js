@@ -87,7 +87,7 @@ class TextStore extends EventEmitter {
 
   get defaultParams() {
     return {
-      id: _.uniqueId('text-'),
+      id: uniqueId('text-'),
       x: 0,
       y: 0,
       width: 160,
@@ -118,7 +118,8 @@ instance.dispatchToken = Dispatcher.register((action) => {
     break;
   case ActionTypes.COPY_TEXT:
     const text = _.clone(instance.findText(action.id));
-    text.key += `-${_.uniqueId()}`
+    text.key += `-${_.uniqueId()}`;
+    text.id = uniqueId();
     updateTexts(text);
     instance.emitChange();
     break;
