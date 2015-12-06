@@ -43,7 +43,7 @@ class DocEditor extends React.Component {
   drawCanvas(img) {
     const ctx = this.refs.canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, this.state.imageWidth, this.state.imageHeight);
-    let data = ctx.getImageData(0, 0, 1, 1);
+    let data = ctx.getImageData(0, 0, this.state.imageWidth, this.state.imageHeight);
     console.log(data);
   }
 
