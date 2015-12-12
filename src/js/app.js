@@ -47,6 +47,10 @@ class DocEditor extends React.Component {
     const data = imageData.data;
     const threshold = 230;
     const len = data.length
+
+    const rectangles = [];
+    const _rectangles = [];
+
     for (let i = 0; i < len; i += 4) {
       if (data[i + 3] > 0 && (data[i] + data[i + 1] + data[i + 2]) < (threshold * 3)) {
         data[i] = data[i + 1] = data[i + 2] = 0;
@@ -55,7 +59,63 @@ class DocEditor extends React.Component {
         data[i] = data[i + 1] = data[i + 2] = data[i + 3] = 255;
       }
     }
-    ctx.putImageData(imageData, 0, 0);
+    this.setState({ imageData });
+    // ctx.putImageData(imageData, 0, 0);
+    ctx.clearRect(0, 0, this.state.imageWidth, this.state.imageHeight);
+  }
+
+  handleClickCanvas(e) {
+    const rect = {};
+    const zoom = this.state.previewWidth / this.state.imageWidth;
+    const x = Math.round((e.pageX - 10) / zoom);
+    const y = Math.round((e.pageY - 10) / zoom);
+    const baseDataIdx = (x + y * this.state.imageWidth) * 4;
+    const data = this.state.imageData.data;
+    let dataIdx = baseDataIdx;
+    let scanning = true;
+
+    while (scanning) {
+      let toX = data[dataIdx - 4] > 0;
+      let toY = data[dataIdx - this.state.imageData.width * 4] > 0;
+      let toD = data[dataIdx - 4 - this.state.imageData.width * 4] > 0;
+      if (toD) {
+        dataIdx = dataIdx - 4 - this.state.imageData.width * 4;
+      } else if (toX) {
+        dataIdx = dataIdx - 4;
+      } else if (toY) {
+        dataIdx = dataIdx - this.state.imageData.width * 4;
+      } else {
+        scanning = false;
+      }
+    }
+    rect.x = (dataIdx / 4) % this.state.imageData.width;
+    rect.y = Math.floor((dataIdx / 4) / this.state.imageData.width);
+
+    dataIdx = baseDataIdx;
+    scanning = true;
+    while (scanning) {
+      let toX = data[dataIdx + 4] > 0;
+      let toY = data[dataIdx + this.state.imageData.width * 4] > 0;
+      let toD = data[dataIdx + 4 + this.state.imageData.width * 4] > 0;
+      if (toD) {
+        dataIdx = dataIdx + 4 + this.state.imageData.width * 4;
+      } else if (toX) {
+        dataIdx = dataIdx + 4;
+      } else if (toY) {
+        dataIdx = dataIdx + this.state.imageData.width * 4;
+      } else {
+        scanning = false;
+      }
+    }
+
+    rect.w = (dataIdx / 4) % this.state.imageData.width - rect.x;
+    rect.h = Math.floor((dataIdx / 4) / this.state.imageData.width) - rect.y;
+    console.log(rect);
+
+    const ctx = this.refs.canvas.getContext('2d');
+    ctx.strokeStyle = '#f00';
+    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
+    ctx.closePath();
   }
 
   isCurrentText(id) {
@@ -198,6 +258,7 @@ class DocEditor extends React.Component {
               width={this.state.imageWidth}
               height={this.state.imageHeight}
               style={{width: `${this.state.previewWidth}px`, height: `${this.state.previewHeight}px`}}
+              onClick={this.handleClickCanvas.bind(this)}
             />
             {(() => {
               return this.state.texts.map((text, i) => {
