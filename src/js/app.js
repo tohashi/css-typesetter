@@ -43,8 +43,19 @@ class DocEditor extends React.Component {
   drawCanvas(img) {
     const ctx = this.refs.canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, this.state.imageWidth, this.state.imageHeight);
-    let data = ctx.getImageData(0, 0, this.state.imageWidth, this.state.imageHeight);
-    console.log(data);
+    const imageData = ctx.getImageData(0, 0, this.state.imageWidth, this.state.imageHeight);
+    const data = imageData.data;
+    const threshold = 230;
+    const len = data.length
+    for (let i = 0; i < len; i += 4) {
+      if (data[i + 3] > 0 && (data[i] + data[i + 1] + data[i + 2]) < (threshold * 3)) {
+        data[i] = data[i + 1] = data[i + 2] = 0;
+        data[i + 3] = 255;
+      } else {
+        data[i] = data[i + 1] = data[i + 2] = data[i + 3] = 255;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
   }
 
   isCurrentText(id) {
