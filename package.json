@@ -1,5 +1,5 @@
 {
-  "name": "doc-style-editor",
+  "name": "css-typesetter",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -33,11 +33,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tohashi/doc-style-editor.git"
+    "url": "git+https://github.com/tohashi/css-typesetter.git"
   },
   "bugs": {
-    "url": "https://github.com/tohashi/doc-style-editor/issues"
+    "url": "https://github.com/tohashi/css-typesetter/issues"
   },
-  "homepage": "https://github.com/tohashi/doc-style-editor#readme",
+  "homepage": "https://github.com/tohashi/css-typesetter#readme",
   "description": ""
 }

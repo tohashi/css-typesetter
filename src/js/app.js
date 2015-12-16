@@ -240,7 +240,7 @@ class DocEditor extends React.Component {
     };
 
     return (
-      <div className="doc-style-editor">
+      <div className="typesetter">
         <div className="doc-wrapper">
           <div className="doc-image" style={imageStyle}>
             <canvas
