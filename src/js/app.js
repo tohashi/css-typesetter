@@ -84,7 +84,7 @@ class DocEditor extends React.Component {
     if (!text.key || !text.value) {
       return;
     }
-    // const exists = TextStore.exists(text.id);
+    const exists = TextStore.exists(text.id);
     TextAction.update(text);
     if (!exists) {
       this.setState({ textParams: TextStore.defaultParams });

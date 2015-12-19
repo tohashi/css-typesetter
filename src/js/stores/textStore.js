@@ -6,7 +6,7 @@ import { ActionTypes } from '../constants'
 const CHANGE_EVENT = 'change';
 
 let texts = loadFromLS() || [];
-let textsHistory = [[]];
+let textsHistory = [_.cloneDeep(texts)];
 let historyIdx = 0;
 
 function updateTexts(params) {
@@ -19,6 +19,9 @@ function updateTexts(params) {
     return text;
   });
   if (added) {
+    if (!params.key) {
+      params.key = params.value;
+    }
     texts.push(params);
   }
 }
@@ -88,8 +91,8 @@ class TextStore extends EventEmitter {
       y: 0,
       width: 160,
       height: 20,
-      value: '',
-      key: '',
+      value: 'test',
+      key: 'test',
       fontSize: 12,
       scale: 1,
       lineHeight: null,

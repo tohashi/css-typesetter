@@ -36,7 +36,7 @@ export default class PublishArea extends React.Component {
                       left: ${text.x}px;
                       top: ${text.y}px;
                       width: ${text.width}px;
-                      height: ${text.height};
+                      height: ${text.height}px;
                       font-size: ${text.fontSize}px;`
 
             if (text.scale !== 1) {

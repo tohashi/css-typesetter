@@ -79,6 +79,7 @@ export default class DocImage extends React.Component {
     ctx.strokeStyle = '#f00';
     ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
     ctx.closePath();
+
     // TextAction.update(_.extend({}, this.state.textParams, {
     //   key: _.uniqueId('test'),
     //   x: rect.x * zoom,

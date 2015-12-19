@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-
 import TextStore from '../stores/textStore';
 import TextAction from '../actions/textAction';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 export default class Setting extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inputChangeHandler = this.handleInputChange.bind(this);
   }
 
@@ -40,6 +40,9 @@ export default class Setting extends React.Component {
     this.props.handleInputChange(e.target.name, value);
   }
 
+  handleSelect() {
+  }
+
   render() {
     return (
       <div className="setting">
@@ -60,79 +63,88 @@ export default class Setting extends React.Component {
           })()}
         </div>
 
-        <table>
-          <tbody>
-            <tr>
-              <td>class</td>
-              <td><input type="text" name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>value</td>
-              <td><input type="text" name="value" value={this.props.text.value} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>x</td>
-              <td><input type="number" name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>y</td>
-              <td><input type="number" name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>width</td>
-              <td><input type="number" name="width" value={this.props.text.width} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>height</td>
-              <td><input type="number" name="height" value={this.props.text.height} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>font-size</td>
-              <td><input type="number" name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>scale</td>
-              <td><input type="number" name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>line-height</td>
-              <td><input type="number" name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>letter-spacing</td>
-              <td><input type="text" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
-            </tr>
-            <tr>
-              <td>text-align</td>
-              <td>
-                {(() => {
-                  return ['left', 'center', 'right'].map((type) => {
-                    return (
-                      <label key={type}>
-                        <input type="radio" name="textAlign" value={type} onChange={this.inputChangeHandler} checked={this.props.text.textAlign === type} />
-                        {type}
-                      </label>
-                    );
-                  });
-                })()}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {(() => {
-          if (!TextStore.exists(this.props.text.id)) {
-            return (
-              <button className="add-btn" onClick={this.props.handleUpdateText}>add</button>
-            );
-          }
-          return (
-            <div>
-              <button className="copy-btn" onClick={this.handleCopyText.bind(this)}>copy</button>
-              <button className="remove-btn" onClick={this.handleRemoveText.bind(this)}>remove</button>
-            </div>
-          );
-        })()}
-
+        <Tabs onSlect={this.handleSelect.bind(this)} selectedIndex={0}>
+          <TabList>
+            <Tab>auto</Tab>
+            <Tab>manual</Tab>
+          </TabList>
+          <TabPanel>
+            <table>
+              <tbody>
+                <tr>
+                  <td>class</td>
+                  <td><input type="text" name="key" value={this.props.text.key} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>value</td>
+                  <td><input type="text" name="value" value={this.props.text.value} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td><input type="number" name="x" value={this.props.text.x} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td><input type="number" name="y" value={this.props.text.y} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>width</td>
+                  <td><input type="number" name="width" value={this.props.text.width} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>height</td>
+                  <td><input type="number" name="height" value={this.props.text.height} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>font-size</td>
+                  <td><input type="number" name="fontSize" value={this.props.text.fontSize} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>scale</td>
+                  <td><input type="number" name="scale" value={this.props.text.scale} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>line-height</td>
+                  <td><input type="number" name="lineHeight" value={this.props.text.lineHeight} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>letter-spacing</td>
+                  <td><input type="text" name="letterSpacing" value={this.props.text.letterSpacing} onChange={this.inputChangeHandler} /></td>
+                </tr>
+                <tr>
+                  <td>text-align</td>
+                  <td>
+                    {(() => {
+                      return ['left', 'center', 'right'].map((type) => {
+                        return (
+                          <label key={type}>
+                            <input type="radio" name="textAlign" value={type} onChange={this.inputChangeHandler} checked={this.props.text.textAlign === type} />
+                            {type}
+                          </label>
+                        );
+                      });
+                    })()}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {(() => {
+              if (!TextStore.exists(this.props.text.id)) {
+                return (
+                  <button className="add-btn" onClick={this.props.handleUpdateText}>add</button>
+                );
+              }
+              return (
+                <div>
+                  <button className="copy-btn" onClick={this.handleCopyText.bind(this)}>copy</button>
+                  <button className="remove-btn" onClick={this.handleRemoveText.bind(this)}>remove</button>
+                </div>
+              );
+            })()}
+          </TabPanel>
+          <TabPanel>
+          </TabPanel>
+        </Tabs>
         <ul className="text-list">
           {(() => {
             return this.props.texts.map((text) => {
