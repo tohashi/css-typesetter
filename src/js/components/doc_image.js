@@ -4,38 +4,26 @@ import Draggable from 'react-draggable';
 export default class DocImage extends React.Component {
   get imageStyle() {
     return {
-      width: `${this.state.previewWidth}px`,
-      height: `${this.state.previewHeight}px`
+      width: `${this.props.previewWidth}px`,
+      height: `${this.props.previewHeight}px`,
+      backgroundImage: `url(${this.props.imageUrl})`
     };
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      previewWidth: 720,
-      previewHeight: 0,
-      imageWidth: 0,
-      imageHeight: 0
-    }
   }
 
   componentDidMount() {
     const img = document.createElement('img');
-    img.src = './src/img/sample.png';
+    img.src = this.props.imageUrl;
     img.onload = ((e) => {
-      this.setState({
-        imageWidth: e.target.width,
-        imageHeight: e.target.height,
-        previewHeight: Math.round((this.state.previewWidth / e.target.width) * e.target.height) || 0
+      this.props.handleImageLoaded(e, () => {
+        this.drawCanvas(img);
       });
-      this.drawCanvas(img);
     });
   }
 
   drawCanvas(img) {
     const ctx = this.refs.canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, this.state.imageWidth, this.state.imageHeight);
-    const imageData = ctx.getImageData(0, 0, this.state.imageWidth, this.state.imageHeight);
+    ctx.drawImage(img, 0, 0, this.props.imageWidth, this.props.imageHeight);
+    const imageData = ctx.getImageData(0, 0, this.props.imageWidth, this.props.imageHeight);
     const data = imageData.data;
     const threshold = 230;
     const len = data.length
@@ -50,7 +38,7 @@ export default class DocImage extends React.Component {
     }
     this.setState({ imageData });
     // ctx.putImageData(imageData, 0, 0);
-    ctx.clearRect(0, 0, this.state.imageWidth, this.state.imageHeight);
+    ctx.clearRect(0, 0, this.props.imageWidth, this.props.imageHeight);
   }
 
   scanEdgePoint(data, baseIdx, intervalX, intervalY) {
@@ -72,10 +60,10 @@ export default class DocImage extends React.Component {
 
   handleClickCanvas(e) {
     const rect = {};
-    const zoom = this.state.previewWidth / this.state.imageWidth;
+    const zoom = this.props.previewWidth / this.props.imageWidth;
     const x = Math.round((e.pageX - 10) / zoom);
     const y = Math.round((e.pageY - 10) / zoom);
-    const baseDataIdx = (x + y * this.state.imageWidth) * 4;
+    const baseDataIdx = (x + y * this.props.imageWidth) * 4;
     const data = this.state.imageData.data;
     let scanning = true;
 
@@ -151,9 +139,9 @@ export default class DocImage extends React.Component {
       <div className="doc-image" style={this.imageStyle}>
         <canvas
           ref="canvas"
-          width={this.state.imageWidth}
-          height={this.state.imageHeight}
-          style={{width: `${this.state.previewWidth}px`, height: `${this.state.previewHeight}px`}}
+          width={this.props.imageWidth}
+          height={this.props.imageHeight}
+          style={{width: `${this.props.previewWidth}px`, height: `${this.props.previewHeight}px`}}
           onClick={this.handleClickCanvas.bind(this)}
         />
         {(() => {

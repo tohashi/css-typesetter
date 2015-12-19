@@ -64,10 +64,7 @@ export default class Setting extends React.Component {
             }
           })()}
         </div>
-        <div>
-          previewWidth<input defaultValue={this.props.previewWidth} />
-          <button onClick={this.props.changePreviewWidth}>change</button>
-        </div>
+
         <table>
           <tbody>
             <tr>

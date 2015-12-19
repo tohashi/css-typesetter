@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-
 import TextStore from './stores/textStore';
 import TextAction from './actions/textAction';
+import Dropzone from 'react-dropzone';
 import DocImage from './components/doc_image';
 import Setting from './components/setting';
 import PublishArea from './components/publishArea';
@@ -13,6 +13,10 @@ class DocEditor extends React.Component {
     super(props);
     this.textChangeHandler = this.handleTextChange.bind(this);
     this.state = {
+      previewWidth: 720,
+      previewHeight: 0,
+      imageWidth: 0,
+      imageHeight: 0,
       textParams: TextStore.defaultParams,
       texts: TextStore.texts
     }
@@ -80,22 +84,24 @@ class DocEditor extends React.Component {
     if (!text.key || !text.value) {
       return;
     }
-    const exists = TextStore.exists(text.id);
+    // const exists = TextStore.exists(text.id);
     TextAction.update(text);
     if (!exists) {
       this.setState({ textParams: TextStore.defaultParams });
     }
   }
 
-  changePreviewWidth(e) {
-    const previewWidth = e.target.parentElement.querySelector('input').value - 0
-    const prevZoom = this.state.previewWidth / this.state.imageWidth;
-    const nextZoom = previewWidth / this.state.imageWidth;
+  handleChangePreviewWidth(e) {
+    const previewWidth = e.target.value - 0;
+    this.setState({ previewWidth });
+  }
+
+  handleImageLoaded(e, cb) {
     this.setState({
-      previewWidth,
-      previewHeight: nextZoom * this.state.imageHeight 
-    });
-    TextAction.changeZoom(1 / (prevZoom / nextZoom));
+      imageWidth: e.target.width,
+      imageHeight: e.target.height,
+      previewHeight: Math.round((this.state.previewWidth / e.target.width) * e.target.height) || 0
+    }, cb);
   }
 
   handleUndo() {
@@ -106,30 +112,57 @@ class DocEditor extends React.Component {
     TextAction.redo();
   }
 
+  handleDrop(files) {
+    const file = files[0];
+    if (!/image/.test(file.type)) {
+      return;
+    }
+    this.setState({
+      imageUrl: file.preview
+    });
+  }
+
   render() {
+    if (!this.state.imageUrl) {
+      return (
+        <div className="typesetter">
+          <div className="doc-wrapper">
+            <Dropzone onDrop={this.handleDrop.bind(this)}>
+              <div>Try dropping an image here, or click to select an image to upload.</div>
+            </Dropzone>
+            <div>
+              previewWidth: <input value={this.state.previewWidth} onChange={this.handleChangePreviewWidth.bind(this)} />
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="typesetter">
         <div className="doc-wrapper">
           <DocImage
             ref="docImage"
+            imageUrl={this.state.imageUrl}
+            previewWidth={this.state.previewWidth}
+            previewHeight={this.state.previewHeight}
+            imageWidth={this.state.imageWidth}
+            imageHeight={this.state.imageHeight}
             text={this.state.textParams}
             texts={this.state.texts}
             handleStop={this.handleStop.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)}
+            handleImageLoaded={this.handleImageLoaded.bind(this)}
           />
-
           <Setting
             text={this.state.textParams}
             texts={this.state.texts}
-            previewWidth={this.state.previewWidth}
             handleUndo={this.handleUndo.bind(this)}
             handleRedo={this.handleRedo.bind(this)}
-            changePreviewWidth={this.changePreviewWidth.bind(this)}
             handleInputChange={this.handleInputChange.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
-            handleSelectText={this.handleSelectText.bind(this)} />
+            handleSelectText={this.handleSelectText.bind(this)}
+          />
         </div>
-
         <PublishArea texts={this.state.texts} />
       </div>
     );

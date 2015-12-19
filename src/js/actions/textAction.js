@@ -23,13 +23,6 @@ export default {
     });
   },
 
-  changeZoom(zoom) {
-    Dispatcher.dispatch({
-      actionType: ActionTypes.CHANGE_ZOOM,
-      zoom
-    });
-  },
-
   undo() {
     Dispatcher.dispatch({
       actionType: ActionTypes.UNDO
