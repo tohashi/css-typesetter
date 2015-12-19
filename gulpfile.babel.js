@@ -9,7 +9,8 @@ function bundle(watch = false) {
   fs.existsSync('dist') || fs.mkdirSync('dist');
   browserify({
     entries: ['src/js/app.js'],
-    plugin: [watch ? 'watchify' : null]
+    plugin: [watch ? 'watchify' : null],
+    debug: true
   })
     .transform('babelify', {presets: ['es2015', 'react']})
     .bundle()
@@ -35,5 +36,5 @@ gulp.task('watch', ['watch:js', 'watch:css'], () => {
     .pipe(webserver({ port: 3333 }));
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['build', 'watch']);
 
