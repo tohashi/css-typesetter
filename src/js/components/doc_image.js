@@ -108,21 +108,6 @@ export default class DocImage extends React.Component {
       className += ' selected';
       textStyle.zIndex = 1;
     }
-    if (text.split) {
-      return (
-        <ul
-          className={className}
-          style={textStyle}
-          onClick={this.props.handleSelectText.bind(this.props, text.id)}
-        >
-          {(() => {
-            return `${text.value}`.split('').map((char, i) => {
-              return <li className="split-char" key={`${text.value}-${i}`}>{char}</li>;
-            });
-          })()}
-        </ul>
-      );
-    }
     return (
       <div
         className={className}

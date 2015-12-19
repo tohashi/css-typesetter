@@ -8,7 +8,6 @@ export default class Setting extends React.Component {
   constructor() {
     super();
     this.inputChangeHandler = this.handleInputChange.bind(this);
-    this.checkedHandler = this.handleChecked.bind(this);
   }
 
   isCurrentText(id) {
@@ -39,10 +38,6 @@ export default class Setting extends React.Component {
       value = parsedValue
     }
     this.props.handleInputChange(e.target.name, value);
-  }
-
-  handleChecked(e) {
-    this.props.handleInputChange(e.target.name, e.target.checked);
   }
 
   render() {
@@ -120,15 +115,6 @@ export default class Setting extends React.Component {
                     );
                   });
                 })()}
-              </td>
-            </tr>
-            <tr>
-              <td>split</td>
-              <td>
-                <label>
-                  <input type="checkbox" name="split" value={true} checked={this.props.text.split} onChange={this.checkedHandler} />
-                  split
-                </label>
               </td>
             </tr>
           </tbody>
