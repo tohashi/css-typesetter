@@ -1,12 +1,12 @@
 {
   "name": "css-typesetter",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp"
   },
-  "author": "",
+  "author": "tohashi",
   "license": "MIT",
   "devDependencies": {
     "babel": "^6.3.13",
@@ -42,5 +42,5 @@
     "url": "https://github.com/tohashi/css-typesetter/issues"
   },
   "homepage": "https://github.com/tohashi/css-typesetter#readme",
-  "description": ""
+  "description": "GUI Tool for typsetting with CSS."
 }
