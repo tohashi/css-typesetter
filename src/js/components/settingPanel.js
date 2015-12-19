@@ -38,7 +38,9 @@ export default class SettingPanel extends React.Component {
         !_.isNaN(parsedValue)) {
       value = parsedValue
     }
-    this.props.handleInputChange(e.target.name, value);
+    const params = {}
+    params[e.target.name] = value
+    this.props.handleInputChange(params);
   }
 
   handleSelect() {

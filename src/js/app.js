@@ -4,11 +4,11 @@ import _ from 'lodash';
 import TextStore from './stores/textStore';
 import TextAction from './actions/textAction';
 import Dropzone from 'react-dropzone';
-import DocImage from './components/doc_image';
-import Setting from './components/setting';
+import DocImage from './components/docImage';
+import SettingPanel from './components/settingPanel';
 import PublishArea from './components/publishArea';
 
-class DocEditor extends React.Component {
+class Typesetter extends React.Component {
   constructor(props) {
     super(props);
     this.textChangeHandler = this.handleTextChange.bind(this);
@@ -68,9 +68,9 @@ class DocEditor extends React.Component {
     });
   }
 
-  handleInputChange(id, value) {
+  handleUpdateTextParams(params) {
     this.setState((state) => {
-      state.textParams[id] = value;
+      _.extend(state.textParams, params);
       return state;
     }, () => {
       if (TextStore.exists(this.state.textParams.id)) {
@@ -152,13 +152,14 @@ class DocEditor extends React.Component {
             handleStop={this.handleStop.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)}
             handleImageLoaded={this.handleImageLoaded.bind(this)}
+            handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
           />
-          <Setting
+          <SettingPanel
             text={this.state.textParams}
             texts={this.state.texts}
             handleUndo={this.handleUndo.bind(this)}
             handleRedo={this.handleRedo.bind(this)}
-            handleInputChange={this.handleInputChange.bind(this)}
+            handleInputChange={this.handleUpdateTextParams.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)}
           />
@@ -169,5 +170,5 @@ class DocEditor extends React.Component {
   }
 }
 
-ReactDOM.render(<DocEditor />, document.getElementById('root'));
+ReactDOM.render(<Typesetter />, document.getElementById('root'));
 

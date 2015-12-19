@@ -80,13 +80,12 @@ export default class DocImage extends React.Component {
     ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
     ctx.closePath();
 
-    // TextAction.update(_.extend({}, this.state.textParams, {
-    //   key: _.uniqueId('test'),
-    //   x: rect.x * zoom,
-    //   y: rect.y * zoom,
-    //   width: rect.w * zoom,
-    //   height: rect.h * zoom
-    // }));
+    this.props.handleUpdateTextParams({
+      x: Math.round(rect.x * zoom),
+      y: Math.round(rect.y * zoom),
+      width: Math.round(rect.w * zoom),
+      height: Math.round(rect.h * zoom)
+    });
   }
 
   isCurrentText(id) {
