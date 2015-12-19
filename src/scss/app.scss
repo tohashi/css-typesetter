@@ -25,7 +25,6 @@ ul {
 }
 
 .doc-image {
-  display: block;
   width: 720px;
   height: auto;
   float: left;
@@ -65,11 +64,19 @@ ul {
   }
 }
 
-.result {
-  clear: both;
-  margin: 20px auto 40px;
-  textarea {
-    width: 540px;
-    height: 200px;
+.code-preview {
+  margin: 0 20px;
+  div {
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  .preview-html {
+    float: left;
+    width: 50%;
+  }
+  .preview-css {
+    float: right;
+    width: 50%;
+    border-left: 1px solid #aaa;
   }
 }

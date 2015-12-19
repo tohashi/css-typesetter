@@ -157,6 +157,10 @@ class Typesetter extends React.Component {
           <SettingPanel
             text={this.state.textParams}
             texts={this.state.texts}
+            imageClassName="doc-image"
+            textClassName="text-block"
+            previewWidth={this.state.previewWidth}
+            previewHeight={this.state.previewHeight}
             handleUndo={this.handleUndo.bind(this)}
             handleRedo={this.handleRedo.bind(this)}
             handleInputChange={this.handleUpdateTextParams.bind(this)}

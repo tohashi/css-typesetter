@@ -92,7 +92,13 @@ export default class SettingPanel extends React.Component {
             })()}
           </TabPanel>
           <TabPanel>
-            <Publishing texts={this.props.texts} />
+            <Publishing
+              texts={this.props.texts}
+              imageClassName={this.props.imageClassName}
+              textClassName={this.props.textClassName}
+              previewWidth={this.props.previewWidth}
+              previewHeight={this.props.previewHeight}
+            />
           </TabPanel>
         </Tabs>
         <ul className="text-list">

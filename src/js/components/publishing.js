@@ -7,12 +7,9 @@ import TextAction from '../actions/textAction';
 export default class Publishing extends React.Component {
   get modalStyle() {
     return {
-      top:         '50%',
-      left:        '50%',
-      right:       'auto',
-      bottom:      'auto',
-      marginRight: '-50%',
-      transform:   'translate(-50%, -50%)'
+      content: {
+        padding: '0'
+      }
     }
   }
 
@@ -57,21 +54,25 @@ export default class Publishing extends React.Component {
           onRequestClose={this.closeModal.bind(this)}
           style={this.modalStyle}
         >
-          <div>
-            <div>
+          <div className="code-preview">
+            <div className="preview-html">
               <pre>
-                {"<div class=\"image\">\n"}
+                {`<div class="${this.props.imageClassName}">\n`}
                   {this.props.texts.map((text) => {
-                    return `  <div class=${`text-item ${text.key}`}>${text.value}</div>\n`;
+                    return `  <div class="${`${this.props.textClassName} ${text.key}`}">${text.value}</div>\n`;
                   })}
                 {"</div>"}
               </pre>
             </div>
-            <div>
+            <div className="preview-css">
               <pre>
-{`.image {
+{`.${this.props.imageClassName} {
   position: relative;
-  .text-item {
+  background-size: 100% auto;
+  background-image: url(<IMAGE_URL>);
+  width: ${this.props.previewWidth}px;
+  height: ${this.props.previewHeight}px;
+  .${this.props.textClassName} {
     position: absolute;
     word-wrap: break-word;
     transform-origin: 0 0;
@@ -112,8 +113,8 @@ export default class Publishing extends React.Component {
         </Modal>
         <div className="json-export">
           <div>
-            <button onClick={this.handleImport.bind(this)}>import</button>
-            <button onClick={this.handleExport.bind(this)}>export</button>
+            <button onClick={this.handleImport.bind(this)}>import json</button>
+            <button onClick={this.handleExport.bind(this)}>export json</button>
           </div>
           <textarea value={this.state.json} onChange={this.handleInput.bind(this)} />
         </div>

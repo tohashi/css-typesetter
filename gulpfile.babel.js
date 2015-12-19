@@ -26,7 +26,7 @@ gulp.task('build:css', () => {
 gulp.task('build', ['build:js', 'build:css']);
 
 gulp.task('watch:js', () => {
-  gulp.watch('src/js/**.js', () => bundle(true));
+  gulp.watch('src/js/**/*.js', () => bundle(true));
 });
 gulp.task('watch:css', () => {
   gulp.watch('src/scss/**/*.scss', ['build:css']);

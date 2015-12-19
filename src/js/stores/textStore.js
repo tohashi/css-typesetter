@@ -11,6 +11,9 @@ let historyIdx = 0;
 
 function updateTexts(params) {
   let added = true;
+  if (!params.key) {
+    params.key = params.value;
+  }
   texts = texts.map((text) => {
     if (text.id === params.id) {
       text = params;
@@ -19,9 +22,6 @@ function updateTexts(params) {
     return text;
   });
   if (added) {
-    if (!params.key) {
-      params.key = params.value;
-    }
     texts.push(params);
   }
 }
