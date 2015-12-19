@@ -18,7 +18,8 @@ class Typesetter extends React.Component {
       imageWidth: 0,
       imageHeight: 0,
       textParams: TextStore.defaultParams,
-      texts: TextStore.texts
+      texts: TextStore.texts,
+      imageUrl: '../src/img/sample.png'
     }
   }
 

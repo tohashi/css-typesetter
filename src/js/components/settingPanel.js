@@ -4,6 +4,7 @@ import TextStore from '../stores/textStore';
 import TextAction from '../actions/textAction';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import SettingTable from './settingTable';
+import Publishing from './publishing';
 
 export default class SettingPanel extends React.Component {
   constructor(props) {
@@ -68,8 +69,8 @@ export default class SettingPanel extends React.Component {
 
         <Tabs onSlect={this.handleSelect.bind(this)} selectedIndex={0}>
           <TabList>
-            <Tab>auto</Tab>
-            <Tab>manual</Tab>
+            <Tab>parameters</Tab>
+            <Tab>publishing</Tab>
           </TabList>
           <TabPanel>
             <SettingTable
@@ -91,6 +92,7 @@ export default class SettingPanel extends React.Component {
             })()}
           </TabPanel>
           <TabPanel>
+            <Publishing texts={this.props.texts} />
           </TabPanel>
         </Tabs>
         <ul className="text-list">
