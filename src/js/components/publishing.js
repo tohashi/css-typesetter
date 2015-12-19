@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import Modal from 'react-modal';
+import TextStore from '../stores/textStore';
+import TextAction from '../actions/textAction';
 
 export default class Publishing extends React.Component {
   get modalStyle() {
@@ -17,7 +19,8 @@ export default class Publishing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      json: ''
     }
   }
 
@@ -27,6 +30,22 @@ export default class Publishing extends React.Component {
 
   closeModal() {
     this.setState({ modalIsOpen: false });
+  }
+
+  handleInput(e) {
+    this.setState({
+      json: e.target.value
+    });
+  }
+
+  handleImport() {
+    TextAction.import(this.state.json);
+  }
+
+  handleExport() {
+    this.setState({
+      json: JSON.stringify(TextStore.texts)
+    });
   }
 
   render() {
@@ -91,6 +110,13 @@ export default class Publishing extends React.Component {
             </div>
           </div>
         </Modal>
+        <div className="json-export">
+          <div>
+            <button onClick={this.handleImport.bind(this)}>import</button>
+            <button onClick={this.handleExport.bind(this)}>export</button>
+          </div>
+          <textarea value={this.state.json} onChange={this.handleInput.bind(this)} />
+        </div>
       </div>
     );
   }

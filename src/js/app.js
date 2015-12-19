@@ -6,7 +6,6 @@ import TextAction from './actions/textAction';
 import Dropzone from 'react-dropzone';
 import DocImage from './components/docImage';
 import SettingPanel from './components/settingPanel';
-import PublishArea from './components/publishArea';
 
 class Typesetter extends React.Component {
   constructor(props) {
@@ -165,7 +164,6 @@ class Typesetter extends React.Component {
             handleSelectText={this.handleSelectText.bind(this)}
           />
         </div>
-        <PublishArea texts={this.state.texts} />
       </div>
     );
   }
