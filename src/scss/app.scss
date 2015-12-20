@@ -37,6 +37,17 @@ ul {
   border: 1px solid $borderColor;
 }
 
+.image-dropzone {
+  border-radius:5px;
+  border: 2px dashed $borderColor;
+  width: 600px;
+  height: 300px;
+  padding: 10px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #888;
+}
+
 .draggable-text {
   position: absolute;
   left: 0;

@@ -137,7 +137,7 @@ class Typesetter extends React.Component {
       return (
         <div className="typesetter">
           <div className="doc-wrapper">
-            <Dropzone onDrop={this.handleDrop.bind(this)}>
+            <Dropzone className="image-dropzone" onDrop={this.handleDrop.bind(this)}>
               <div>Try dropping an image here, or click to select an image to upload.</div>
             </Dropzone>
             <div>
