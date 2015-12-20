@@ -141,7 +141,7 @@ class Typesetter extends React.Component {
               <div>Try dropping an image here, or click to select an image to upload.</div>
             </Dropzone>
             <div>
-              previewWidth: <input value={this.state.previewWidth} onChange={this.handleChangePreviewWidth.bind(this)} />
+              width: <input value={this.state.previewWidth} onChange={this.handleChangePreviewWidth.bind(this)} />
             </div>
           </div>
         </div>
