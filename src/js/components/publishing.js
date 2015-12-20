@@ -92,7 +92,7 @@ export default class Publishing extends React.Component {
                     if (text.scale !== 1) {
                       css += `\n    transform: scale(${text.scale});`;
                     }
-                    if (_.isNumber(text.lineHeight)) {
+                    if (text.lineHeight) {
                       css += `\n    line-height: ${text.lineHeight}px;`;
                     }
                     if (text.letterSpacing) {
