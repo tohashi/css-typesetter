@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0; }
+
+ul {
+  padding: 0; }
+  ul li {
+    list-style: none; }
+
+.draggable-text.selected, .text-item.selected {
+  background: rgba(255, 0, 0, 0.5); }
+
+.typesetter {
+  margin: 10px; }
+
+.doc-wrapper {
+  overflow: hidden;
+  margin: 0 auto;
+  width: 100%; }
+
+.doc-image {
+  width: 720px;
+  height: auto;
+  float: left;
+  background-size: 100% auto;
+  position: relative;
+  border: 1px solid #aaa; }
+
+.draggable-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  word-wrap: break-word;
+  transform-origin: 0 0;
+  background: rgba(200, 255, 200, 0.5);
+  box-sizing: border-box; }
+
+.setting-panel {
+  background: #fff;
+  display: block;
+  width: 25%;
+  height: auto;
+  margin-left: 10px;
+  padding: 10px 0;
+  float: left;
+  border: 1px solid #aaa; }
+  .setting-panel .tab-panel {
+    padding: 0 10px; }
+  .setting-panel .text-list {
+    border: 1px solid #aaa; }
+    .setting-panel .text-list .text-item {
+      cursor: pointer;
+      border-top: 1px solid #aaa;
+      box-sizing: border-box; }
+      .setting-panel .text-list .text-item:last-child {
+        border-bottom: 1px solid #aaa; }
+
+.code-preview {
+  margin: 0 20px; }
+  .code-preview div {
+    box-sizing: border-box;
+    padding: 10px; }
+  .code-preview .preview-html {
+    float: left;
+    width: 50%; }
+  .code-preview .preview-css {
+    float: right;
+    width: 50%;
+    border-left: 1px solid #aaa; }
