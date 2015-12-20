@@ -1,3 +1,5 @@
+$borderColor: #aaa;
+
 body {
   margin: 0;
   padding: 0;
@@ -10,8 +12,10 @@ ul {
   }
 }
 
-.selected {
-  background: rgba(255, 0, 0, 0.5);
+.draggable-text, .text-item {
+  &.selected {
+    background: rgba(255, 0, 0, 0.5);
+  }
 }
 
 .typesetter {
@@ -30,17 +34,18 @@ ul {
   float: left;
   background-size: 100% auto;
   position: relative;
-  border: 1px solid #000;
+  border: 1px solid $borderColor;
 }
 
 .draggable-text {
   position: absolute;
   left: 0;
   top: 0;
-  border: 1px solid #000;
   cursor: pointer;
   word-wrap: break-word;
   transform-origin: 0 0;
+  background: rgba(200, 255, 200, 0.5);
+  box-sizing: border-box;
 }
 
 .setting-panel {
@@ -48,19 +53,22 @@ ul {
   width: 25%;
   height: auto;
   margin-left: 10px;
+  padding: 10px 0;
   float: left;
-  border: 1px solid #000;
+  border: 1px solid $borderColor;
+  .tab-panel {
+    padding: 0 10px;
+  }
   .text-list {
+    border: 1px solid $borderColor;
     .text-item {
       cursor: pointer;
-      border: 1px solid #000;
+      border-top: 1px solid $borderColor;
+      box-sizing: border-box;
+      &:last-child {
+        border-bottom: 1px solid $borderColor;
+      }
     }
-  }
-  .add-btn,
-  .copy-btn,
-  .remove-btn {
-    padding: 4px 10px;
-    font-size: 18px;
   }
 }
 
@@ -77,6 +85,7 @@ ul {
   .preview-css {
     float: right;
     width: 50%;
-    border-left: 1px solid #aaa;
+    border-left: 1px solid $borderColor;
   }
 }
+

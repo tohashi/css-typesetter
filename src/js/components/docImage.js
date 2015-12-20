@@ -37,7 +37,6 @@ export default class DocImage extends React.Component {
       }
     }
     this.setState({ imageData });
-    // ctx.putImageData(imageData, 0, 0);
     ctx.clearRect(0, 0, this.props.imageWidth, this.props.imageHeight);
   }
 
@@ -74,11 +73,6 @@ export default class DocImage extends React.Component {
     dataIdx = this.scanEdgePoint(data, baseDataIdx, 4, this.state.imageData.width * 4);
     rect.w = (dataIdx / 4) % this.state.imageData.width - rect.x;
     rect.h = Math.floor((dataIdx / 4) / this.state.imageData.width) - rect.y;
-
-    const ctx = this.refs.canvas.getContext('2d');
-    ctx.strokeStyle = '#f00';
-    ctx.strokeRect(rect.x, rect.y, rect.w, rect.h);
-    ctx.closePath();
 
     this.props.handleUpdateTextParams({
       x: Math.round(rect.x * zoom),
@@ -123,6 +117,7 @@ export default class DocImage extends React.Component {
     return (
       <div className="doc-image" style={this.imageStyle}>
         <canvas
+          className="doc-image-canvas"
           ref="canvas"
           width={this.props.imageWidth}
           height={this.props.imageHeight}

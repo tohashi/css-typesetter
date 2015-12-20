@@ -48,6 +48,30 @@ export default class SettingPanel extends React.Component {
   }
 
   render() {
+    const textList = (
+      <div className="text-list">
+        <p>texts</p>
+        <ul>
+          {(() => {
+            return this.props.texts.map((text) => {
+              let className = 'text-item'
+              if (this.isCurrentText(text.id)) {
+                className += ' selected';
+              }
+              return (
+                <li
+                  className={className}
+                  key={text.id}
+                  onClick={this.handleSelectText.bind(this, text.id)} >
+                  {text.key}
+                </li>
+              );
+            });
+          })()}
+        </ul>
+      </div>
+    );
+
     return (
       <div className="setting-panel">
         <div>
@@ -72,7 +96,7 @@ export default class SettingPanel extends React.Component {
             <Tab>parameters</Tab>
             <Tab>publishing</Tab>
           </TabList>
-          <TabPanel>
+          <TabPanel className="tab-panel">
             <SettingTable
               text={this.props.text}
               handleChange={this.inputChangeHandler}
@@ -80,18 +104,19 @@ export default class SettingPanel extends React.Component {
             {(() => {
               if (!TextStore.exists(this.props.text.id)) {
                 return (
-                  <button className="add-btn" onClick={this.props.handleUpdateText}>add</button>
+                  <button onClick={this.props.handleUpdateText}>add</button>
                 );
               }
               return (
                 <div>
-                  <button className="copy-btn" onClick={this.handleCopyText.bind(this)}>copy</button>
-                  <button className="remove-btn" onClick={this.handleRemoveText.bind(this)}>remove</button>
+                  <button onClick={this.handleCopyText.bind(this)}>copy</button>
+                  <button onClick={this.handleRemoveText.bind(this)}>remove</button>
                 </div>
               );
             })()}
+            {textList}
           </TabPanel>
-          <TabPanel>
+          <TabPanel className="tab-panel">
             <Publishing
               texts={this.props.texts}
               imageClassName={this.props.imageClassName}
@@ -99,26 +124,9 @@ export default class SettingPanel extends React.Component {
               previewWidth={this.props.previewWidth}
               previewHeight={this.props.previewHeight}
             />
+            {textList}
           </TabPanel>
         </Tabs>
-        <ul className="text-list">
-          {(() => {
-            return this.props.texts.map((text) => {
-              let className = 'text-item'
-              if (this.isCurrentText(text.id)) {
-                className += ' selected';
-              }
-              return (
-                <li
-                  className={className}
-                  key={text.id}
-                  onClick={this.handleSelectText.bind(this, text.id)} >
-                  {text.key}
-                </li>
-              );
-            });
-          })()}
-        </ul>
       </div>
     );
   }

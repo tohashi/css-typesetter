@@ -7,6 +7,9 @@ import TextAction from '../actions/textAction';
 export default class Publishing extends React.Component {
   get modalStyle() {
     return {
+      overlay: {
+        zIndex: 2
+      },
       content: {
         padding: '0'
       }
