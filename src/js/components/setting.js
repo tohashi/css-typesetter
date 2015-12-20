@@ -41,9 +41,6 @@ export default class SettingPanel extends React.Component {
     this.props.handleInputChange(e.target.name, value);
   }
 
-  handleSelect() {
-  }
-
   render() {
     return (
       <div className="setting-panel">
@@ -64,7 +61,7 @@ export default class SettingPanel extends React.Component {
           })()}
         </div>
 
-        <Tabs onSlect={this.handleSelect.bind(this)} selectedIndex={0}>
+        <Tabs selectedIndex={0}>
           <TabList>
             <Tab>auto</Tab>
             <Tab>manual</Tab>

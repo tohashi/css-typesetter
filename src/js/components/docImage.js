@@ -79,7 +79,7 @@ export default class DocImage extends React.Component {
       y: Math.round(rect.y * zoom),
       width: Math.round(rect.w * zoom),
       height: Math.round(rect.h * zoom)
-    });
+    }, this.props.handleUpdateText);
   }
 
   isCurrentText(id) {
@@ -133,7 +133,8 @@ export default class DocImage extends React.Component {
                 axis="both"
                 start={{ x: Number(text.x), y: Number(text.y) }}
                 moveOnStartChange={true}
-                onStop={this.props.handleStop.bind(this.props, text.id)}
+                onDrag={this.props.handleDrag.bind(this.props, text.id)}
+                onStop={this.props.handleStopDragging.bind(this.props, text.id)}
               >
                 {this.createDraggableInner(text)}
               </Draggable>

@@ -18,7 +18,8 @@ class Typesetter extends React.Component {
       imageHeight: 0,
       textParams: TextStore.defaultParams,
       texts: TextStore.texts,
-      imageUrl: '../src/img/sample.png'
+      imageUrl: '../src/img/sample.png',
+      draggingId: null
     }
   }
 
@@ -49,7 +50,13 @@ class Typesetter extends React.Component {
     });
   }
 
-  handleStop(id) {
+  handleDrag(id) {
+    if (this.state.draggingId !== id) {
+      this.setState({ draggingId: id });
+    }
+  }
+
+  handleStopDragging(id) {
     const text = TextStore.findText(id);
     text.x = this.refs.docImage.refs[text.id].state.clientX;
     text.y = this.refs.docImage.refs[text.id].state.clientY;
@@ -59,22 +66,25 @@ class Typesetter extends React.Component {
   handleSelectText(id) {
     const text = TextStore.findText(id);
     this.setState((state) => {
-      if (text) {
+      if (text && (text.id !== state.textParams.id || text.id === state.draggingId)) {
         state.textParams = text;
       } else {
         state.textParams = TextStore.defaultParams;
       }
+      state.draggingId = null;
       return state;
     });
   }
 
-  handleUpdateTextParams(params) {
+  handleUpdateTextParams(params, cb) {
     this.setState((state) => {
       _.extend(state.textParams, params);
       return state;
     }, () => {
       if (TextStore.exists(this.state.textParams.id)) {
         this.handleUpdateText();
+      } else if (_.isFunction(cb)) {
+        cb();
       }
     });
   }
@@ -149,9 +159,11 @@ class Typesetter extends React.Component {
             imageHeight={this.state.imageHeight}
             text={this.state.textParams}
             texts={this.state.texts}
-            handleStop={this.handleStop.bind(this)}
+            handleDrag={_.throttle(this.handleDrag.bind(this), 500)}
+            handleStopDragging={this.handleStopDragging.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)}
             handleImageLoaded={this.handleImageLoaded.bind(this)}
+            handleUpdateText={this.handleUpdateText.bind(this)}
             handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
           />
           <SettingPanel
