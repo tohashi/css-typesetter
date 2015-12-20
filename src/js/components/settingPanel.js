@@ -44,7 +44,8 @@ export default class SettingPanel extends React.Component {
     this.props.handleInputChange(params);
   }
 
-  handleSelect() {
+  handleClear() {
+    TextAction.clear();
   }
 
   render() {
@@ -91,7 +92,7 @@ export default class SettingPanel extends React.Component {
           })()}
         </div>
 
-        <Tabs onSlect={this.handleSelect.bind(this)} selectedIndex={0}>
+        <Tabs selectedIndex={0}>
           <TabList>
             <Tab>parameters</Tab>
             <Tab>publishing</Tab>
@@ -115,6 +116,7 @@ export default class SettingPanel extends React.Component {
               );
             })()}
             {textList}
+            <button onClick={this.handleClear.bind(this)}>clear</button>
           </TabPanel>
           <TabPanel className="tab-panel">
             <Publishing
@@ -125,6 +127,7 @@ export default class SettingPanel extends React.Component {
               previewHeight={this.props.previewHeight}
             />
             {textList}
+            <button onClick={this.handleClear.bind(this)}>clear</button>
           </TabPanel>
         </Tabs>
       </div>

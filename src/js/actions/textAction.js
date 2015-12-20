@@ -40,6 +40,12 @@ export default {
       actionType: ActionTypes.IMPORT,
       json
     });
+  },
+
+  clear() {
+    Dispatcher.dispatch({
+      actionType: ActionTypes.CLEAR
+    });
   }
 };
 

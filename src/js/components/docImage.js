@@ -40,47 +40,49 @@ export default class DocImage extends React.Component {
     ctx.clearRect(0, 0, this.props.imageWidth, this.props.imageHeight);
   }
 
-  scanEdgePoint(data, baseIdx, intervalX, intervalY) {
-    let scanning = true;
-    let edgeIdx = baseIdx;
-    while (scanning) {
-      if (data[edgeIdx + intervalX + intervalY] > 0) {
-        edgeIdx += intervalX + intervalY;
-      } else if (data[edgeIdx + intervalX] > 0) {
-        edgeIdx += intervalX;
-      } else if (data[edgeIdx + intervalY] > 0) {
-        edgeIdx += intervalY;
-      } else {
-        scanning = false;
-      }
+
+
+handleClickCanvas(e) {
+  const rect = {};
+  const zoom = this.props.previewWidth / this.props.imageWidth;
+  const x = Math.round((e.pageX - 10) / zoom);
+  const y = Math.round((e.pageY - 10) / zoom);
+  const baseDataIdx = (x + y * this.props.imageWidth) * 4;
+  const data = this.state.imageData.data;
+  let scanning = true;
+
+  let dataIdx = this.scanEdgePoint(data, baseDataIdx, -4, this.state.imageData.width * -4);
+  rect.x = (dataIdx / 4) % this.state.imageData.width;
+  rect.y = Math.floor((dataIdx / 4) / this.state.imageData.width);
+
+  dataIdx = this.scanEdgePoint(data, baseDataIdx, 4, this.state.imageData.width * 4);
+  rect.w = (dataIdx / 4) % this.state.imageData.width - rect.x;
+  rect.h = Math.floor((dataIdx / 4) / this.state.imageData.width) - rect.y;
+
+  this.props.handleUpdateTextParams({
+    x: Math.round(rect.x * zoom),
+    y: Math.round(rect.y * zoom),
+    width: Math.round(rect.w * zoom),
+    height: Math.round(rect.h * zoom)
+  }, this.props.handleUpdateText);
+}
+
+scanEdgePoint(data, baseIdx, intervalX, intervalY) {
+  let scanning = true;
+  let edgeIdx = baseIdx;
+  while (scanning) {
+    if (data[edgeIdx + intervalX + intervalY] > 0) {
+      edgeIdx += intervalX + intervalY;
+    } else if (data[edgeIdx + intervalX] > 0) {
+      edgeIdx += intervalX;
+    } else if (data[edgeIdx + intervalY] > 0) {
+      edgeIdx += intervalY;
+    } else {
+      scanning = false;
     }
-    return edgeIdx;
   }
-
-  handleClickCanvas(e) {
-    const rect = {};
-    const zoom = this.props.previewWidth / this.props.imageWidth;
-    const x = Math.round((e.pageX - 10) / zoom);
-    const y = Math.round((e.pageY - 10) / zoom);
-    const baseDataIdx = (x + y * this.props.imageWidth) * 4;
-    const data = this.state.imageData.data;
-    let scanning = true;
-
-    let dataIdx = this.scanEdgePoint(data, baseDataIdx, -4, this.state.imageData.width * -4);
-    rect.x = (dataIdx / 4) % this.state.imageData.width;
-    rect.y = Math.floor((dataIdx / 4) / this.state.imageData.width);
-
-    dataIdx = this.scanEdgePoint(data, baseDataIdx, 4, this.state.imageData.width * 4);
-    rect.w = (dataIdx / 4) % this.state.imageData.width - rect.x;
-    rect.h = Math.floor((dataIdx / 4) / this.state.imageData.width) - rect.y;
-
-    this.props.handleUpdateTextParams({
-      x: Math.round(rect.x * zoom),
-      y: Math.round(rect.y * zoom),
-      width: Math.round(rect.w * zoom),
-      height: Math.round(rect.h * zoom)
-    }, this.props.handleUpdateText);
-  }
+  return edgeIdx;
+}
 
   isCurrentText(key) {
     return key === this.props.text.key;

@@ -136,6 +136,10 @@ instance.dispatchToken = Dispatcher.register((action) => {
     texts = data;
     instance.emitChange();
     break;
+  case ActionTypes.CLEAR:
+    texts = [];
+    instance.emitChange();
+    break;
   }
 
   if (TextStore.redoable) {
