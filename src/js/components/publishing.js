@@ -103,7 +103,7 @@ export default class Publishing extends React.Component {
                     }
                     css += '\n  }\n';
                     return (
-                      <span key={text.id}>
+                      <span key={text.key}>
                         {css}
                       </span>
                     );

@@ -19,7 +19,7 @@ class Typesetter extends React.Component {
       textParams: TextStore.defaultParams,
       texts: TextStore.texts,
       imageUrl: '../src/img/sample.png',
-      draggingId: null
+      draggingKey: null
     }
   }
 
@@ -33,7 +33,7 @@ class Typesetter extends React.Component {
 
   handleTextChange() {
     const texts = TextStore.texts;
-    const currentKey = this.state.textParams.id;
+    const currentKey = this.state.textParams.key;
     const newTextParams = _.cloneDeep(TextStore.findText(currentKey)) ||
       this.state.textParams;
 
@@ -42,7 +42,7 @@ class Typesetter extends React.Component {
       texts
     }, () => {
       texts.forEach((text) => {
-        this.refs.docImage.refs[text.id].setState({
+        this.refs.docImage.refs[text.key].setState({
           clientX: text.x,
           clientY: text.y
         });
@@ -50,28 +50,28 @@ class Typesetter extends React.Component {
     });
   }
 
-  handleDrag(id) {
-    if (this.state.draggingId !== id) {
-      this.setState({ draggingId: id });
+  handleDrag(key) {
+    if (this.state.draggingKey !== key) {
+      this.setState({ draggingKey: key });
     }
   }
 
-  handleStopDragging(id) {
-    const text = TextStore.findText(id);
-    text.x = this.refs.docImage.refs[text.id].state.clientX;
-    text.y = this.refs.docImage.refs[text.id].state.clientY;
+  handleStopDragging(key) {
+    const text = TextStore.findText(key);
+    text.x = this.refs.docImage.refs[text.key].state.clientX;
+    text.y = this.refs.docImage.refs[text.key].state.clientY;
     TextAction.update(text);
   }
 
-  handleSelectText(id) {
-    const text = TextStore.findText(id);
+  handleSelectText(key) {
+    const text = TextStore.findText(key);
     this.setState((state) => {
-      if (text && (text.id !== state.textParams.id || text.id === state.draggingId)) {
+      if (text && (text.key !== state.textParams.key || text.key === state.draggingKey)) {
         state.textParams = text;
       } else {
         state.textParams = TextStore.defaultParams;
       }
-      state.draggingId = null;
+      state.draggingKey = null;
       return state;
     });
   }
@@ -81,7 +81,7 @@ class Typesetter extends React.Component {
       _.extend(state.textParams, params);
       return state;
     }, () => {
-      if (TextStore.exists(this.state.textParams.id)) {
+      if (TextStore.exists(this.state.textParams.key)) {
         this.handleUpdateText();
       } else if (_.isFunction(cb)) {
         cb();
@@ -94,7 +94,7 @@ class Typesetter extends React.Component {
     if (!text.key || !text.value) {
       return;
     }
-    const exists = TextStore.exists(text.id);
+    const exists = TextStore.exists(text.key);
     TextAction.update(text);
     if (!exists) {
       this.setState({ textParams: TextStore.defaultParams });

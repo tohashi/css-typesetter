@@ -11,11 +11,8 @@ let historyIdx = 0;
 
 function updateTexts(params) {
   let added = true;
-  if (!params.key) {
-    params.key = params.value;
-  }
   texts = texts.map((text) => {
-    if (text.id === params.id) {
+    if (text.key === params.key) {
       text = params;
       added = false;
     }
@@ -26,9 +23,9 @@ function updateTexts(params) {
   }
 }
 
-function removeText(id) {
+function removeText(key) {
   texts = texts.filter((text) => {
-    return text.id !== id;
+    return text.key !== key;
   });
 }
 
@@ -40,12 +37,12 @@ function loadFromLS() {
   return JSON.parse(localStorage.getItem('texts'));
 }
 
-function uniqueId() {
-  const id = _.uniqueId('text_');
-  if (instance.exists(id)) {
-    return uniqueId();
+function uniqueKey(prefix) {
+  const key = _.uniqueId(prefix);
+  if (instance.exists(key)) {
+    return uniqueKey(`${key}-`);
   }
-  return id;
+  return key;
 }
 
 class TextStore extends EventEmitter {
@@ -61,15 +58,15 @@ class TextStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  findText(id) {
+  findText(key) {
     const text = texts.find((text) => {
-      return text.id === id;
+      return text.key === key;
     });
     return text;
   }
 
-  exists(id) {
-    return !!this.findText(id);
+  exists(key) {
+    return !!this.findText(key);
   }
 
   undoable() {
@@ -86,13 +83,12 @@ class TextStore extends EventEmitter {
 
   get defaultParams() {
     return {
-      id: uniqueId('text-'),
+      key: uniqueKey('text-'),
       x: 0,
       y: 0,
       width: 160,
       height: 20,
       value: 'test',
-      key: 'test',
       fontSize: 12,
       scale: 1,
       lineHeight: null,
@@ -111,13 +107,12 @@ instance.dispatchToken = Dispatcher.register((action) => {
     instance.emitChange();
     break;
   case ActionTypes.REMOVE_TEXT:
-    removeText(action.id);
+    removeText(action.key);
     instance.emitChange();
     break;
   case ActionTypes.COPY_TEXT:
-    const text = _.clone(instance.findText(action.id));
-    text.key += `-${_.uniqueId()}`;
-    text.id = uniqueId();
+    const text = _.clone(instance.findText(action.key));
+    text.key = uniqueKey(`${text.key}-`);
     updateTexts(text);
     instance.emitChange();
     break;

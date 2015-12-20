@@ -12,23 +12,23 @@ export default class SettingPanel extends React.Component {
     this.inputChangeHandler = this.handleInputChange.bind(this);
   }
 
-  isCurrentText(id) {
-    return id === this.props.text.id;
+  isCurrentText(key) {
+    return key === this.props.text.key;
   }
 
-  handleRemoveText(id) {
-    TextAction.remove(this.props.text.id);
+  handleRemoveText(key) {
+    TextAction.remove(this.props.text.key);
     this.props.handleSelectText(null);
   }
 
-  handleCopyText(id) {
-    TextAction.copy(this.props.text.id);
+  handleCopyText(key) {
+    TextAction.copy(this.props.text.key);
     this.props.handleSelectText(null);
   }
 
-  handleSelectText(id) {
+  handleSelectText(key) {
     this.props.handleSelectText(
-      this.isCurrentText(id) ? null : id
+      this.isCurrentText(key) ? null : key
     );
   }
 
@@ -55,14 +55,14 @@ export default class SettingPanel extends React.Component {
           {(() => {
             return this.props.texts.map((text) => {
               let className = 'text-item'
-              if (this.isCurrentText(text.id)) {
+              if (this.isCurrentText(text.key)) {
                 className += ' selected';
               }
               return (
                 <li
                   className={className}
-                  key={text.id}
-                  onClick={this.handleSelectText.bind(this, text.id)} >
+                  key={text.key}
+                  onClick={this.handleSelectText.bind(this, text.key)} >
                   {text.key}
                 </li>
               );
@@ -102,7 +102,7 @@ export default class SettingPanel extends React.Component {
               handleChange={this.inputChangeHandler}
             />
             {(() => {
-              if (!TextStore.exists(this.props.text.id)) {
+              if (!TextStore.exists(this.props.text.key)) {
                 return (
                   <button onClick={this.props.handleUpdateText}>add</button>
                 );

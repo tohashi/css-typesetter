@@ -82,8 +82,8 @@ export default class DocImage extends React.Component {
     }, this.props.handleUpdateText);
   }
 
-  isCurrentText(id) {
-    return id === this.props.text.id;
+  isCurrentText(key) {
+    return key === this.props.text.key;
   }
 
 
@@ -98,7 +98,7 @@ export default class DocImage extends React.Component {
       textAlign: text.textAlign
     };
     let className = 'draggable-text';
-    if (this.isCurrentText(text.id)) {
+    if (this.isCurrentText(text.key)) {
       className += ' selected';
       textStyle.zIndex = 1;
     }
@@ -106,7 +106,7 @@ export default class DocImage extends React.Component {
       <div
         className={className}
         style={textStyle}
-        onClick={this.props.handleSelectText.bind(this.props, text.id)}
+        onClick={this.props.handleSelectText.bind(this.props, text.key)}
       >
         {text.value}
       </div>
@@ -128,13 +128,13 @@ export default class DocImage extends React.Component {
           return this.props.texts.map((text, i) => {
             return (
               <Draggable
-                ref={text.id}
-                key={text.id}
+                ref={text.key}
+                key={text.key}
                 axis="both"
                 start={{ x: Number(text.x), y: Number(text.y) }}
                 moveOnStartChange={true}
-                onDrag={this.props.handleDrag.bind(this.props, text.id)}
-                onStop={this.props.handleStopDragging.bind(this.props, text.id)}
+                onDrag={this.props.handleDrag.bind(this.props, text.key)}
+                onStop={this.props.handleStopDragging.bind(this.props, text.key)}
               >
                 {this.createDraggableInner(text)}
               </Draggable>

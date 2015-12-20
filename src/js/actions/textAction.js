@@ -9,17 +9,17 @@ export default {
     });
   },
 
-  remove(id) {
+  remove(key) {
     Dispatcher.dispatch({
       actionType: ActionTypes.REMOVE_TEXT,
-      id
+      key
     });
   },
 
-  copy(id) {
+  copy(key) {
     Dispatcher.dispatch({
       actionType: ActionTypes.COPY_TEXT,
-      id
+      key
     });
   },
 
