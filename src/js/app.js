@@ -12,7 +12,7 @@ class Typesetter extends React.Component {
     super(props);
     this.textChangeHandler = this.handleTextChange.bind(this);
     this.state = {
-      previewWidth: 720,
+      previewWidth: 520,
       previewHeight: 0,
       imageWidth: 0,
       imageHeight: 0,

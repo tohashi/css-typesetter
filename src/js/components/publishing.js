@@ -95,7 +95,7 @@ export default class Publishing extends React.Component {
                     if (_.isNumber(text.lineHeight)) {
                       css += `\n    line-height: ${text.lineHeight}px;`;
                     }
-                    if (_.isNumber(text.letterSpacing)) {
+                    if (text.letterSpacing) {
                       css += `\n    letter-spacing: ${text.letterSpacing}px;`;
                     }
                     if (text.textAlign != 'left') {
