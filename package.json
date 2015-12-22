@@ -30,9 +30,7 @@
     "react-draggable": "github:tohashi/react-draggable",
     "react-dropzone": "^3.3.0",
     "react-modal": "^0.6.1",
-    "react-redux": "^4.0.0",
-    "react-tabs": "^0.5.1",
-    "redux": "^3.0.4"
+    "react-tabs": "^0.5.1"
   },
   "repository": {
     "type": "git",
