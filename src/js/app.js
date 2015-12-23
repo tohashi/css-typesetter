@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone';
 import DocImage from './components/docImage';
 import SettingPanel from './components/settingPanel';
 
-class Typesetter extends React.Component {
+export default class Typesetter extends React.Component {
   constructor(props) {
     super(props);
     this.textChangeHandler = this.handleTextChange.bind(this);

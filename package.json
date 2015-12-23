@@ -1,13 +1,17 @@
 {
   "name": "css-typesetter",
-  "version": "0.1.0",
-  "main": "index.js",
+  "version": "0.1.1",
+  "main": "src/app.js",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp"
   },
   "author": "tohashi",
   "license": "MIT",
+  "engines": {
+    "node": "^4.2.2",
+    "npm": "^2.14.7"
+  },
   "devDependencies": {
     "babel": "^6.3.13",
     "babel-core": "^6.3.21",
@@ -40,5 +44,8 @@
     "url": "https://github.com/tohashi/css-typesetter/issues"
   },
   "homepage": "https://github.com/tohashi/css-typesetter#readme",
-  "description": "GUI Tool for typsetting with CSS."
+  "description": "GUI Tool for typsetting with CSS.",
+  "keywords": [
+    "css", "react"
+  ]
 }
