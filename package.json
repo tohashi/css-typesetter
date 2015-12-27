@@ -13,8 +13,8 @@
     "npm": "^2.14.7"
   },
   "devDependencies": {
-    "babel": "^6.3.13",
-    "babel-core": "^6.3.21",
+    "babel": "^6.3.26",
+    "babel-core": "^6.3.26",
     "babel-preset-es2015": "^6.1.2",
     "babel-preset-react": "^6.1.2",
     "babelify": "^7.2.0",
@@ -44,7 +44,7 @@
     "url": "https://github.com/tohashi/css-typesetter/issues"
   },
   "homepage": "https://github.com/tohashi/css-typesetter#readme",
-  "description": "GUI Tool for typsetting with CSS.",
+  "description": "GUI Tool for typsetting with CSS",
   "keywords": [
     "css", "react"
   ]
