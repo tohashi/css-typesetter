@@ -24,11 +24,11 @@ export default class Typesetter extends React.Component {
   }
 
   componentDidMount() {
-    TextStore.addChangeListener(this.textChangeHandler);
+    TextStore.addListener(this.textChangeHandler);
   }
 
   componentWillUnmount() {
-    TextStore.removeListener(this.textChangeHandler);
+    TextStore.addListener(this.textChangeHandler).remove();
   }
 
   handleTextChange() {

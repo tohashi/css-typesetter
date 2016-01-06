@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import { EventEmitter } from 'events';
 import Dispatcher from '../dispatcher';
-import { ActionTypes } from '../constants'
+import { ActionTypes } from '../constants';
+import { Store } from 'flux/utils';
 
 const CHANGE_EVENT = 'change';
 
@@ -45,19 +46,7 @@ function uniqueKey(prefix) {
   return key;
 }
 
-class TextStore extends EventEmitter {
-  emitChange() {
-    this.emit(CHANGE_EVENT);
-  }
-
-  addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
-  }
-
-  removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
-
+class TextStore extends Store {
   findText(key) {
     const text = texts.find((text) => {
       return text.key === key;
@@ -96,59 +85,53 @@ class TextStore extends EventEmitter {
       textAlign: 'left'
     };
   }
+
+  __onDispatch(action) {
+    switch (action.actionType) {
+    case ActionTypes.UPDATE_TEXT:
+      updateTexts(action.params);
+      break;
+    case ActionTypes.REMOVE_TEXT:
+      removeText(action.key);
+      break;
+    case ActionTypes.COPY_TEXT:
+      const text = _.clone(instance.findText(action.key));
+      text.key = uniqueKey(`${text.key}-`);
+      updateTexts(text);
+      break;
+    case ActionTypes.IMPORT:
+      let data = [];
+      try {
+        data = JSON.parse(action.json);
+      } catch (e) {
+        throw Error('parse error');
+      }
+      texts = data;
+      break;
+    case ActionTypes.CLEAR:
+      texts = [];
+      break;
+    case ActionTypes.UNDO:
+      historyIdx -= 1;
+      texts = _.cloneDeep(textsHistory[historyIdx]);
+      this.__emitChange();
+      return;
+    case ActionTypes.REDO:
+      historyIdx += 1;
+      texts = _.cloneDeep(textsHistory[historyIdx]);
+      this.__emitChange();
+      return;
+    default:
+      return;
+    }
+    this.__emitChange();
+    saveToLS();
+    textsHistory.push(_.cloneDeep(texts));
+    historyIdx = textsHistory.length - 1;
+  }
 }
 
-const instance = new TextStore();
-
-instance.dispatchToken = Dispatcher.register((action) => {
-  switch (action.actionType) {
-  case ActionTypes.UPDATE_TEXT:
-    updateTexts(action.params);
-    instance.emitChange();
-    break;
-  case ActionTypes.REMOVE_TEXT:
-    removeText(action.key);
-    instance.emitChange();
-    break;
-  case ActionTypes.COPY_TEXT:
-    const text = _.clone(instance.findText(action.key));
-    text.key = uniqueKey(`${text.key}-`);
-    updateTexts(text);
-    instance.emitChange();
-    break;
-  case ActionTypes.UNDO:
-    historyIdx -= 1;
-    texts = _.cloneDeep(textsHistory[historyIdx]);
-    instance.emitChange();
-    return;
-  case ActionTypes.REDO:
-    historyIdx += 1;
-    texts = _.cloneDeep(textsHistory[historyIdx]);
-    instance.emitChange();
-    return;
-  case ActionTypes.IMPORT:
-    let data = [];
-    try {
-      data = JSON.parse(action.json);
-    } catch (e) {
-      throw Error('parse error');
-    }
-    texts = data;
-    instance.emitChange();
-    break;
-  case ActionTypes.CLEAR:
-    texts = [];
-    instance.emitChange();
-    break;
-  }
-
-  if (TextStore.redoable) {
-    textsHistory.splice(historyIdx);
-  }
-  saveToLS();
-  textsHistory.push(_.cloneDeep(texts));
-  historyIdx = textsHistory.length - 1;
-});
+const instance = new TextStore(Dispatcher);
 
 export default instance;
 
