@@ -8,7 +8,7 @@ import webserver from 'gulp-webserver';
 function bundle(watch = false) {
   fs.existsSync('dist') || fs.mkdirSync('dist');
   browserify({
-    entries: ['src/js/app.js'],
+    entries: ['src/js/index.js'],
     plugin: [watch ? 'watchify' : null],
     debug: true
   })
