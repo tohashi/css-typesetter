@@ -4,6 +4,7 @@ import browserify from 'browserify';
 import watchify from 'watchify';
 import sass from 'gulp-sass';
 import webserver from 'gulp-webserver';
+import gutil from 'gulp-util';
 
 function bundle(watch = false) {
   fs.existsSync('dist') || fs.mkdirSync('dist');
@@ -14,6 +15,7 @@ function bundle(watch = false) {
   })
     .transform('babelify', {presets: ['es2015', 'react']})
     .bundle()
+    .on('error', (e) => gutil.log(e.message))
     .pipe(fs.createWriteStream('dist/bundle.js'));
 }
 

@@ -21,6 +21,7 @@
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
     "gulp-sass": "^2.1.0",
+    "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
     "watchify": "^3.6.0"
   },
@@ -47,6 +48,7 @@
   "homepage": "https://github.com/tohashi/css-typesetter#readme",
   "description": "GUI Tool for typsetting with CSS",
   "keywords": [
-    "css", "react"
+    "css",
+    "react"
   ]
 }
