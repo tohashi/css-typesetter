@@ -18,7 +18,7 @@ export default class Typesetter extends React.Component {
       imageHeight: 0,
       textParams: TextStore.defaultParams,
       texts: TextStore.texts,
-      imageUrl: null,
+      imagePath: null,
       draggingKey: null
     }
   }
@@ -128,12 +128,12 @@ export default class Typesetter extends React.Component {
       return;
     }
     this.setState({
-      imageUrl: file.preview
+      imagePath: file.preview
     });
   }
 
   render() {
-    if (!this.state.imageUrl) {
+    if (!this.state.imagePath) {
       return (
         <div className="typesetter">
           <div className="doc-wrapper">
@@ -152,7 +152,7 @@ export default class Typesetter extends React.Component {
         <div className="doc-wrapper">
           <DocImage
             ref="docImage"
-            imageUrl={this.state.imageUrl}
+            imagePath={this.state.imagePath}
             previewWidth={this.state.previewWidth}
             previewHeight={this.state.previewHeight}
             imageWidth={this.state.imageWidth}

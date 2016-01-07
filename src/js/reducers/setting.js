@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { ActionTypes } from '../constants';
 
 function getInitialState() {
@@ -6,7 +7,7 @@ function getInitialState() {
     previewHeight: 0,
     imageWidth: 0,
     imageHeight: 0,
-    imageUrl: null,
+    imagePath: null,
     draggingKey: null
   };
 };
@@ -14,7 +15,15 @@ function getInitialState() {
 const initialState = getInitialState();
 
 export default function setting(state = initialState, action) {
-  switch(action.actionType) {
+  switch(action.type) {
+  case ActionTypes.SET_IMAGE_PATH:
+    return _.extend({}, state, {
+      imagePath: action.path
+    });
+  case ActionTypes.SET_PREVIEW_WIDTH:
+    return _.extend({}, state, {
+      previewWidth: action.previewWidth
+    });
   default:
     return state;
   }

@@ -6,13 +6,13 @@ export default class DocImage extends React.Component {
     return {
       width: `${this.props.previewWidth}px`,
       height: `${this.props.previewHeight}px`,
-      backgroundImage: `url(${this.props.imageUrl})`
+      backgroundImage: `url(${this.props.imagePath})`
     };
   }
 
   componentDidMount() {
     const img = document.createElement('img');
-    img.src = this.props.imageUrl;
+    img.src = this.props.imagePath;
     img.onload = ((e) => {
       this.props.handleImageLoaded(e, () => {
         this.drawCanvas(img);
