@@ -1,6 +1,7 @@
 import keyMirror from 'keymirror';
 
 const ActionTypes = keyMirror({
+  ADD_TEXT: null,
   UPDATE_TEXT: null,
   REMOVE_TEXT: null,
   COPY_TEXT: null,
