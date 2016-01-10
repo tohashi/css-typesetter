@@ -39,37 +39,12 @@ class Typesetter extends React.Component {
     // TODO
   }
 
-  handleImageLoaded(e, cb) {
-    this.setState({
-      imageWidth: e.target.width,
-      imageHeight: e.target.height,
-      previewHeight: Math.round((this.state.previewWidth / e.target.width) * e.target.height) || 0
-    }, cb);
-  }
-
   handleUpdateText() {
-    const text = this.state.textParams;
-    if (!text.key || !text.value) {
-      return;
-    }
-    const exists = TextStore.exists(text.key);
-    TextAction.update(text);
-    if (!exists) {
-      this.setState({ textParams: TextStore.defaultParams });
-    }
+    // TODO
   }
 
   handleUpdateTextParams(params, cb) {
-    this.setState((state) => {
-      _.extend(state.textParams, params);
-      return state;
-    }, () => {
-      if (TextStore.exists(this.state.textParams.key)) {
-        this.handleUpdateText();
-      } else if (_.isFunction(cb)) {
-        cb();
-      }
-    });
+    // TODO
   }
 
   render() {
@@ -93,17 +68,12 @@ class Typesetter extends React.Component {
         <div className="doc-wrapper">
           <DocImage
             ref="docImage"
-            imagePath={setting.imagePath}
-            previewWidth={setting.previewWidth}
-            previewHeight={setting.previewHeight}
-            imageWidth={setting.imageWidth}
-            imageHeight={setting.imageHeight}
+            actions={actions}
+            setting={setting}
             text={{}}
             texts={texts}
             handleDrag={_.throttle(this.handleDrag.bind(this), 500)}
-            handleStopDragging={this.handleStopDragging.bind(this)}
             handleSelectText={this.handleSelectText.bind(this)}
-            handleImageLoaded={this.handleImageLoaded.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
           />
@@ -115,7 +85,7 @@ class Typesetter extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    texts: state.text.texts,
+    texts: state.texts,
     setting: state.setting
   }
 }

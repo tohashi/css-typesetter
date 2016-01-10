@@ -14,6 +14,10 @@ export default {
 
   setPreviewWidth(previewWidth) {
     return { type: ActionTypes.SET_PREVIEW_WIDTH, previewWidth }
+  },
+
+  setImageSize(img) {
+    return { type: ActionTypes.SET_IMAGE_SIZE, img }
   }
 };
 

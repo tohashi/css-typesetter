@@ -7,8 +7,7 @@ function getInitialState() {
     previewHeight: 0,
     imageWidth: 0,
     imageHeight: 0,
-    imagePath: null,
-    draggingKey: null
+    imagePath: null
   };
 };
 
@@ -23,6 +22,13 @@ export default function setting(state = initialState, action) {
   case ActionTypes.SET_PREVIEW_WIDTH:
     return _.extend({}, state, {
       previewWidth: action.previewWidth
+    });
+  case ActionTypes.SET_IMAGE_SIZE:
+    const img = action.img;
+    return _.extend({}, state, {
+      imageWidth: img.width,
+      imageHeight: img.height,
+      previewHeight: Math.round((state.previewWidth / img.width) * img.height) || 0
     });
   default:
     return state;

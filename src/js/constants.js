@@ -11,7 +11,8 @@ const ActionTypes = keyMirror({
   CLEAR: null,
 
   SET_IMAGE_PATH: null,
-  SET_PREVIEW_WIDTH: null
+  SET_PREVIEW_WIDTH: null,
+  SET_IMAGE_SIZE: null
 });
 
 export { ActionTypes };
