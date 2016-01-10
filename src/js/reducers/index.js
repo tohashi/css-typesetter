@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import texts from './texts';
+import text from './text';
 import setting from './setting';
 
 const rootReducer = combineReducers({
-  texts, setting
+  text, setting
 });
 
 export default rootReducer;

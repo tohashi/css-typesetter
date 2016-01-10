@@ -1,7 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import TextStore from '../stores/textStore';
-import TextAction from '../actions/textAction';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import SettingTable from './settingTable';
 import Publishing from './publishing';
@@ -13,16 +11,16 @@ export default class SettingPanel extends React.Component {
   }
 
   isCurrentText(key) {
-    return key === this.props.text.key;
+    return key === this.props.edittingText.key;
   }
 
   handleRemoveText(key) {
-    TextAction.remove(this.props.text.key);
+    this.props.actions.removeText(this.props.edittingText.key);
     this.props.handleSelectText(null);
   }
 
   handleCopyText(key) {
-    TextAction.copy(this.props.text.key);
+    this.props.actions.copyText(this.props.edittingText.key);
     this.props.handleSelectText(null);
   }
 
@@ -44,25 +42,15 @@ export default class SettingPanel extends React.Component {
     this.props.handleInputChange(params);
   }
 
-  handleClear() {
-    TextAction.clear();
-  }
-
-  handleUndo() {
-    // TODO
-  }
-
-  handleRedo() {
-    // TODO
-  }
-
   render() {
+    const text = this.props.text;
+    const texts = text.texts;
     const textList = (
       <div className="text-list">
         <p>texts</p>
         <ul>
           {(() => {
-            return this.props.texts.map((text) => {
+            return texts.map((text) => {
               let className = 'text-item'
               if (this.isCurrentText(text.key)) {
                 className += ' selected';
@@ -85,16 +73,16 @@ export default class SettingPanel extends React.Component {
       <div className="setting-panel">
         <div>
           {(() => {
-            if (TextStore.undoable()) {
+            if (text.undoable) {
               return (
-                <button onClick={this.handleUndo}>undo</button>
+                <button onClick={this.props.actions.undo}>undo</button>
               );
             }
           })()}
           {(() => {
-            if (TextStore.redoable()) {
+            if (text.redoable) {
               return (
-                <button onClick={this.handleRedo}>redo</button>
+                <button onClick={this.props.actions.redo}>redo</button>
               );
             }
           })()}
@@ -107,11 +95,12 @@ export default class SettingPanel extends React.Component {
           </TabList>
           <TabPanel className="tab-panel">
             <SettingTable
-              text={this.props.text}
+              text={this.props.edittingText}
               handleChange={this.inputChangeHandler}
             />
             {(() => {
-              if (!TextStore.exists(this.props.text.key)) {
+              // TODO key exists
+              if (!this.props.edittingText.key) {
                 return (
                   <button onClick={this.props.handleUpdateText}>add</button>
                 );
@@ -124,18 +113,18 @@ export default class SettingPanel extends React.Component {
               );
             })()}
             {textList}
-            <button onClick={this.handleClear.bind(this)}>clear</button>
+            <button onClick={this.props.actions.clearTexts}>clear</button>
           </TabPanel>
           <TabPanel className="tab-panel">
             <Publishing
-              texts={this.props.texts}
+              texts={texts}
               imageClassName={this.props.imageClassName}
               textClassName={this.props.textClassName}
               previewWidth={this.props.setting.previewWidth}
               previewHeight={this.props.setting.previewHeight}
             />
             {textList}
-            <button onClick={this.handleClear.bind(this)}>clear</button>
+            <button onClick={this.props.actions.clearTexts}>clear</button>
           </TabPanel>
         </Tabs>
       </div>

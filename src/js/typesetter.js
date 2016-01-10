@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import TextAction from './actions/text';
 import SettingAction from './actions/setting';
+import HistoryAction from './actions/history';
 import Dropzone from 'react-dropzone';
 import DocImage from './components/docImage';
 import SettingPanel from './components/settingPanel';
@@ -12,7 +13,8 @@ class Typesetter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      draggingKey: null
+      draggingKey: null,
+      edittingText: this.props.text.getDefaultParams()
     };
   }
 
@@ -25,15 +27,6 @@ class Typesetter extends React.Component {
     if (this.state.draggingKey !== key) {
       this.setState({ draggingKey: key });
     }
-  }
-
-  handleStopDragging(key) {
-    const params = {
-      key,
-      x: this.refs.docImage.refs[key].state.clientX,
-      y: this.refs.docImage.refs[key].state.clientY
-    }
-    this.props.actions.updateText(params);
   }
 
   handleSelectText(key) {
@@ -49,7 +42,8 @@ class Typesetter extends React.Component {
   }
 
   render() {
-    const { texts, setting, actions } = this.props;
+    const { text, setting, actions } = this.props;
+    const texts = text.texts;
     if (!setting.imagePath) {
       return (
         <div className="typesetter">
@@ -69,20 +63,16 @@ class Typesetter extends React.Component {
         <div className="doc-wrapper">
           <DocImage
             ref="docImage"
-            actions={actions}
-            setting={setting}
-            text={{}}
-            texts={texts}
+            {...this.props}
+            edittingText={this.state.edittingText}
             handleDrag={_.throttle(this.handleDrag.bind(this), 500)}
             handleSelectText={this.handleSelectText.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
           />
           <SettingPanel
-            actions={actions}
-            text={{}}
-            texts={texts}
-            setting={setting}
+            {...this.props}
+            edittingText={this.state.edittingText}
             imageClassName="doc-image"
             textClassName="text-block"
             handleSelectText={this.handleSelectText.bind(this)}
@@ -97,7 +87,7 @@ class Typesetter extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    texts: state.texts,
+    text: state.text,
     setting: state.setting
   }
 }
@@ -106,7 +96,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(_.extend({},
       TextAction,
-      SettingAction
+      SettingAction,
+      HistoryAction
     ), dispatch)
   }
 }

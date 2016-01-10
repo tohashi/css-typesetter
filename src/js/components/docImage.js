@@ -104,7 +104,7 @@ scanEdgePoint(data, baseIdx, intervalX, intervalY) {
 }
 
   isCurrentText(key) {
-    return key === this.props.text.key;
+    return key === this.props.edittingText.key;
   }
 
 
@@ -147,7 +147,7 @@ scanEdgePoint(data, baseIdx, intervalX, intervalY) {
           onClick={this.handleClickCanvas.bind(this)}
         />
         {(() => {
-          return this.props.texts.map((text, i) => {
+          return this.props.text.texts.map((text, i) => {
             return (
               <Draggable
                 ref={text.key}

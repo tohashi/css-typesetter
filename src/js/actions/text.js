@@ -6,6 +6,18 @@ export default {
       type: ActionTypes.UPDATE_TEXT,
       params
     };
+  },
+
+  removeText() {
+    // TODO
+  },
+
+  copyText() {
+    // TODO
+  },
+
+  clearTexts() {
+    // TODO
   }
 };
 
