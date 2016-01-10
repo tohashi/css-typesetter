@@ -48,6 +48,14 @@ export default class SettingPanel extends React.Component {
     TextAction.clear();
   }
 
+  handleUndo() {
+    // TODO
+  }
+
+  handleRedo() {
+    // TODO
+  }
+
   render() {
     const textList = (
       <div className="text-list">
@@ -79,14 +87,14 @@ export default class SettingPanel extends React.Component {
           {(() => {
             if (TextStore.undoable()) {
               return (
-                <button onClick={this.props.handleUndo}>undo</button>
+                <button onClick={this.handleUndo}>undo</button>
               );
             }
           })()}
           {(() => {
             if (TextStore.redoable()) {
               return (
-                <button onClick={this.props.handleRedo}>redo</button>
+                <button onClick={this.handleRedo}>redo</button>
               );
             }
           })()}
@@ -123,8 +131,8 @@ export default class SettingPanel extends React.Component {
               texts={this.props.texts}
               imageClassName={this.props.imageClassName}
               textClassName={this.props.textClassName}
-              previewWidth={this.props.previewWidth}
-              previewHeight={this.props.previewHeight}
+              previewWidth={this.props.setting.previewWidth}
+              previewHeight={this.props.setting.previewHeight}
             />
             {textList}
             <button onClick={this.handleClear.bind(this)}>clear</button>

@@ -11,6 +11,7 @@ function uniqueKey(prefix) {
 
 function getInitialState() {
   return {
+    // TODO uniqueKey
     key: _.uniqueId('text-'),
     x: 0,
     y: 0,

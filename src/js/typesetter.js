@@ -6,6 +6,7 @@ import TextAction from './actions/text';
 import SettingAction from './actions/setting';
 import Dropzone from 'react-dropzone';
 import DocImage from './components/docImage';
+import SettingPanel from './components/settingPanel';
 
 class Typesetter extends React.Component {
   constructor(props) {
@@ -76,6 +77,17 @@ class Typesetter extends React.Component {
             handleSelectText={this.handleSelectText.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
             handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
+          />
+          <SettingPanel
+            actions={actions}
+            text={{}}
+            texts={texts}
+            setting={setting}
+            imageClassName="doc-image"
+            textClassName="text-block"
+            handleSelectText={this.handleSelectText.bind(this)}
+            handleUpdateText={this.handleUpdateText.bind(this)}
+            handleInputChange={this.handleUpdateTextParams.bind(this)}
           />
         </div>
       </div>
