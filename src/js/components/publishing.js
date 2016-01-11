@@ -37,7 +37,7 @@ export default class Publishing extends React.Component {
   }
 
   handleImport() {
-    this.props.actions.import(this.state.json);
+    this.props.actions.importTexts(this.state.json);
   }
 
   handleExport() {

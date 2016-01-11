@@ -39,7 +39,7 @@ export default class SettingPanel extends React.Component {
     }
     const params = {}
     params[e.target.name] = value
-    this.props.handleInputChange(params);
+    this.props.handleUpdateTextParams(params);
   }
 
   render() {

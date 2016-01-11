@@ -29,8 +29,24 @@ class Typesetter extends React.Component {
     }
   }
 
+  findText(key) {
+    return this.props.text.texts.find((text) => {
+      return text.key === key;
+    });
+  }
+
   handleSelectText(key) {
-    // TODO
+    const text = findText(key);
+    this.setState((state) => {
+      if (text && (text.key !== state.edittingText.key ||
+            text.key === state.draggingKey)) {
+        state.textParams = text;
+      } else {
+        state.textParams = this.props.text.getDefaultParams();
+      }
+      state.draggingKey = null;
+      return state;
+    });
   }
 
   handleUpdateText() {
@@ -77,7 +93,7 @@ class Typesetter extends React.Component {
             textClassName="text-block"
             handleSelectText={this.handleSelectText.bind(this)}
             handleUpdateText={this.handleUpdateText.bind(this)}
-            handleInputChange={this.handleUpdateTextParams.bind(this)}
+            handleUpdateTextParams={this.handleUpdateTextParams.bind(this)}
           />
         </div>
       </div>

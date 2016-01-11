@@ -8,11 +8,11 @@ export default {
     };
   },
 
-  removeText() {
+  removeText(key) {
     // TODO
   },
 
-  copyText() {
+  copyText(key) {
     // TODO
   },
 
@@ -20,7 +20,7 @@ export default {
     // TODO
   },
 
-  import() {
+  importTexts(json) {
     // TODO
   }
 };
