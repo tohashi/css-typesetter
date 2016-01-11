@@ -20,10 +20,9 @@ function getDefaultParams() {
 function getInitialState() {
   return {
     getDefaultParams,
-    texts: [getDefaultParams()],
+    texts: [],
     history: [],
     historyIdx: 0,
-    // TODO
     undoable: false,
     redoable: false
   }
@@ -31,7 +30,7 @@ function getInitialState() {
 
 const initialState = getInitialState();
 
-export default function texts(state = initialState, action) {
+const reduce = (state, action) => {
   let texts = [];
   switch(action.type) {
   case ActionTypes.UPDATE_TEXT:
@@ -81,5 +80,12 @@ export default function texts(state = initialState, action) {
   default:
     return state;
   }
+}
+
+export default function texts(state = initialState, action) {
+  return _.extend({}, reduce(state, action), {
+    undoable: state.history.length > 1 && state.historyIdx > 0,
+    redoable: state.historyIdx !== Math.max(state.history.length - 1, 0)
+  });
 }
 
