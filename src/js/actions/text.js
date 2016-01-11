@@ -18,7 +18,7 @@ export default {
   },
 
   importTexts(json) {
-    // TODO
+    return { type: ActionTypes.IMPORT_TEXTS, json }
   }
 };
 

@@ -32,11 +32,12 @@ function getInitialState() {
 const initialState = getInitialState();
 
 export default function texts(state = initialState, action) {
+  let texts = [];
   switch(action.type) {
   case ActionTypes.UPDATE_TEXT:
     const params = action.params;
     let added = true;
-    const texts = state.texts.map((text) => {
+    texts = state.texts.map((text) => {
       if (text.key === params.key) {
         text = params;
         added = false;
@@ -46,31 +47,29 @@ export default function texts(state = initialState, action) {
     if (added) {
       texts.push(params);
     }
-    return _.extend({}, state, {
-      texts: texts
-    });
+    return _.extend({}, state, { texts });
   case ActionTypes.REMOVE_TEXT:
-    const texts = state.texts.filter((text) => {
+    texts = state.texts.filter((text) => {
       return text.key !== action.key;
     });
-    return _.extend({}, state, {
-      texts: texts
-    });
-
+    return _.extend({}, state, { texts });
   case ActionTypes.COPY_TEXT:
     const text = _.cloneDeep(state.texts.find((text) => {
       return text.key === action.key;
     }));
     text.key = _.uniqueId(`${text.key}-`);
-    const texts = state.texts;
+    texts = state.texts;
     texts.push(text);
-    return _.extend({}, state, {
-      texts: texts
-    });
+    return _.extend({}, state, { texts });
   case ActionTypes.CLEAR_TEXTS:
-    return _.extend({}, state, {
-      texts: []
-    });
+    return _.extend({}, state, { texts });
+  case ActionTypes.IMPORT_TEXTS:
+    try {
+      texts = JSON.parse(action.json);
+    } catch (e) {
+      throw Error('parse error');
+    }
+    return _.extend({}, state, { texts });
   case ActionTypes.UNDO:
     state.historyIdx -= 1;
     state.texts = _.cloneDeep(history[state.historyIdx]);

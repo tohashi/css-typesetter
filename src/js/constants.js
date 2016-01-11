@@ -6,7 +6,7 @@ const ActionTypes = keyMirror({
   COPY_TEXT: null,
   UNDO: null,
   REDO: null,
-  IMPORT: null,
+  IMPORT_TEXTS: null,
   CLEAR_TEXTS: null,
 
   SET_IMAGE_PATH: null,
