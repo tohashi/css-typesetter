@@ -23,6 +23,7 @@ function getInitialState() {
     texts: [getDefaultParams()],
     history: [],
     historyIdx: 0,
+    // TODO
     undoable: false,
     redoable: false
   }
@@ -65,6 +66,10 @@ export default function texts(state = initialState, action) {
     texts.push(text);
     return _.extend({}, state, {
       texts: texts
+    });
+  case ActionTypes.CLEAR_TEXTS:
+    return _.extend({}, state, {
+      texts: []
     });
   case ActionTypes.UNDO:
     state.historyIdx -= 1;

@@ -14,7 +14,7 @@ export default {
   },
 
   clearTexts() {
-    // TODO
+    return { type: ActionTypes.CLEAR_TEXTS }
   },
 
   importTexts(json) {
