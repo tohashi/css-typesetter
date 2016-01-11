@@ -100,8 +100,7 @@ export default class SettingPanel extends React.Component {
               handleChange={this.inputChangeHandler}
             />
             {(() => {
-              // TODO key exists
-              if (!this.props.edittingText.key) {
+              if (!this.props.findText(this.props.edittingText.key)) {
                 return (
                   <button onClick={this.props.handleUpdateText}>add</button>
                 );

@@ -36,7 +36,7 @@ class Typesetter extends React.Component {
   }
 
   handleSelectText(key) {
-    const text = findText(key);
+    const text = this.findText(key);
     this.setState((state) => {
       if (text && (text.key !== state.edittingText.key ||
             text.key === state.draggingKey)) {
@@ -50,11 +50,27 @@ class Typesetter extends React.Component {
   }
 
   handleUpdateText() {
-    // TODO
+    const text = this.state.edittingText;
+    if (!text.key || !text.value) {
+      return;
+    }
+    this.props.actions.updateText(text);
+    if (!this.findText(text.key)) {
+      this.setState({ edittingText: this.props.text.getDefaultParams() });
+    }
   }
 
   handleUpdateTextParams(params, cb) {
-    // TODO
+    this.setState((state) => {
+      _.extend(state.edittingText, params);
+      return state;
+    }, () => {
+      if (!!this.findText(this.state.edittingText.key)) {
+        this.handleUpdateText();
+      } else if (_.isFunction(cb)) {
+        cb();
+      }
+    });
   }
 
   render() {
@@ -89,6 +105,7 @@ class Typesetter extends React.Component {
           <SettingPanel
             {...this.props}
             edittingText={this.state.edittingText}
+            findText={this.findText.bind(this)}
             imageClassName="doc-image"
             textClassName="text-block"
             handleSelectText={this.handleSelectText.bind(this)}

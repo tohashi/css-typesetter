@@ -40,11 +40,23 @@ function getInitialState() {
 const initialState = getInitialState();
 
 export default function texts(state = initialState, action) {
-  switch(action.actionType) {
-  case ActionTypes.ADD_TEXT:
-    state.texts.push(_.defaults(action.params, getDefaultTextParams()));
-    state.history.push(state.texts);
-    return state;
+  switch(action.type) {
+  case ActionTypes.UPDATE_TEXT:
+    const params = action.params;
+    let added = true;
+    const texts = state.texts.map((text) => {
+      if (text.key === params.key) {
+        text = params;
+        added = false;
+      }
+      return text;
+    });
+    if (added) {
+      texts.push(params);
+    }
+    return _.extend({}, state, {
+      texts: texts
+    });
   case ActionTypes.UNDO:
     state.historyIdx -= 1;
     state.texts = _.cloneDeep(history[state.historyIdx]);
