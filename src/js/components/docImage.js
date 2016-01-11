@@ -57,51 +57,49 @@ export default class DocImage extends React.Component {
     ctx.clearRect(0, 0, setting.imageWidth, setting.imageHeight);
   }
 
+  handleClickCanvas(e) {
+    const setting = this.props.setting;
+    const rect = {};
+    const zoom = setting.previewWidth / setting.imageWidth;
+    const x = Math.round((e.pageX - 10) / zoom);
+    const y = Math.round((e.pageY - 10) / zoom);
+    const baseDataIdx = (x + y * setting.imageWidth) * 4;
+    const imageData = this.state.imageData;
+    const data = imageData.data;
+    let scanning = true;
 
+    let dataIdx = this.scanEdgePoint(data, baseDataIdx, -4, imageData.width * -4);
+    rect.x = (dataIdx / 4) % imageData.width;
+    rect.y = Math.floor((dataIdx / 4) / imageData.width);
 
-handleClickCanvas(e) {
-  const setting = this.props.setting;
-  const rect = {};
-  const zoom = setting.previewWidth / setting.imageWidth;
-  const x = Math.round((e.pageX - 10) / zoom);
-  const y = Math.round((e.pageY - 10) / zoom);
-  const baseDataIdx = (x + y * setting.imageWidth) * 4;
-  const imageData = this.state.imageData;
-  const data = imageData.data;
-  let scanning = true;
+    dataIdx = this.scanEdgePoint(data, baseDataIdx, 4, imageData.width * 4);
+    rect.w = (dataIdx / 4) % imageData.width - rect.x;
+    rect.h = Math.floor((dataIdx / 4) / imageData.width) - rect.y;
 
-  let dataIdx = this.scanEdgePoint(data, baseDataIdx, -4, imageData.width * -4);
-  rect.x = (dataIdx / 4) % imageData.width;
-  rect.y = Math.floor((dataIdx / 4) / imageData.width);
-
-  dataIdx = this.scanEdgePoint(data, baseDataIdx, 4, imageData.width * 4);
-  rect.w = (dataIdx / 4) % imageData.width - rect.x;
-  rect.h = Math.floor((dataIdx / 4) / imageData.width) - rect.y;
-
-  this.props.handleUpdateTextParams({
-    x: Math.round(rect.x * zoom),
-    y: Math.round(rect.y * zoom),
-    width: Math.round(rect.w * zoom),
-    height: Math.round(rect.h * zoom)
-  }, this.props.handleUpdateText);
-}
-
-scanEdgePoint(data, baseIdx, intervalX, intervalY) {
-  let scanning = true;
-  let edgeIdx = baseIdx;
-  while (scanning) {
-    if (data[edgeIdx + intervalX + intervalY] > 0) {
-      edgeIdx += intervalX + intervalY;
-    } else if (data[edgeIdx + intervalX] > 0) {
-      edgeIdx += intervalX;
-    } else if (data[edgeIdx + intervalY] > 0) {
-      edgeIdx += intervalY;
-    } else {
-      scanning = false;
-    }
+    this.props.handleUpdateTextParams({
+      x: Math.round(rect.x * zoom),
+      y: Math.round(rect.y * zoom),
+      width: Math.round(rect.w * zoom),
+      height: Math.round(rect.h * zoom)
+    }, this.props.handleUpdateText);
   }
-  return edgeIdx;
-}
+
+  scanEdgePoint(data, baseIdx, intervalX, intervalY) {
+    let scanning = true;
+    let edgeIdx = baseIdx;
+    while (scanning) {
+      if (data[edgeIdx + intervalX + intervalY] > 0) {
+        edgeIdx += intervalX + intervalY;
+      } else if (data[edgeIdx + intervalX] > 0) {
+        edgeIdx += intervalX;
+      } else if (data[edgeIdx + intervalY] > 0) {
+        edgeIdx += intervalY;
+      } else {
+        scanning = false;
+      }
+    }
+    return edgeIdx;
+  }
 
   isCurrentText(key) {
     return key === this.props.edittingText.key;

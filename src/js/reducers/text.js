@@ -38,7 +38,7 @@ const reduce = (state, action) => {
     let added = true;
     texts = state.texts.map((text) => {
       if (text.key === params.key) {
-        text = params;
+        text = _.defaults(params, text);
         added = false;
       }
       return text;

@@ -40,9 +40,9 @@ class Typesetter extends React.Component {
     this.setState((state) => {
       if (text && (text.key !== state.edittingText.key ||
             text.key === state.draggingKey)) {
-        state.textParams = text;
+        state.edittingText = text;
       } else {
-        state.textParams = this.props.text.getDefaultParams();
+        state.edittingText = this.props.text.getDefaultParams();
       }
       state.draggingKey = null;
       return state;
