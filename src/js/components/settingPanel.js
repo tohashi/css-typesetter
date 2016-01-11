@@ -45,6 +45,7 @@ export default class SettingPanel extends React.Component {
   render() {
     const text = this.props.text;
     const texts = text.texts;
+    const actions = this.props.actions;
     const textList = (
       <div className="text-list">
         <p>texts</p>
@@ -75,14 +76,14 @@ export default class SettingPanel extends React.Component {
           {(() => {
             if (text.undoable) {
               return (
-                <button onClick={this.props.actions.undo}>undo</button>
+                <button onClick={actions.undo}>undo</button>
               );
             }
           })()}
           {(() => {
             if (text.redoable) {
               return (
-                <button onClick={this.props.actions.redo}>redo</button>
+                <button onClick={actions.redo}>redo</button>
               );
             }
           })()}
@@ -113,10 +114,11 @@ export default class SettingPanel extends React.Component {
               );
             })()}
             {textList}
-            <button onClick={this.props.actions.clearTexts}>clear</button>
+            <button onClick={actions.clearTexts}>clear</button>
           </TabPanel>
           <TabPanel className="tab-panel">
             <Publishing
+              actions={actions}
               texts={texts}
               imageClassName={this.props.imageClassName}
               textClassName={this.props.textClassName}
@@ -124,7 +126,7 @@ export default class SettingPanel extends React.Component {
               previewHeight={this.props.setting.previewHeight}
             />
             {textList}
-            <button onClick={this.props.actions.clearTexts}>clear</button>
+            <button onClick={actions.clearTexts}>clear</button>
           </TabPanel>
         </Tabs>
       </div>

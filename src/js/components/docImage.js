@@ -156,7 +156,7 @@ scanEdgePoint(data, baseIdx, intervalX, intervalY) {
                 start={{ x: Number(text.x), y: Number(text.y) }}
                 moveOnStartChange={true}
                 onDrag={this.props.handleDrag.bind(this.props, text.key)}
-                onStop={this.handleStopDragging.bind(this.props, text.key)}
+                onStop={this.handleStopDragging.bind(this, text.key)}
               >
                 {this.createDraggableInner(text)}
               </Draggable>

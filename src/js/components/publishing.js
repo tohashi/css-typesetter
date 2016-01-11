@@ -1,8 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import Modal from 'react-modal';
-import TextStore from '../stores/textStore';
-import TextAction from '../actions/textAction';
 
 export default class Publishing extends React.Component {
   get modalStyle() {
@@ -39,12 +37,12 @@ export default class Publishing extends React.Component {
   }
 
   handleImport() {
-    TextAction.import(this.state.json);
+    this.props.actions.import(this.state.json);
   }
 
   handleExport() {
     this.setState({
-      json: JSON.stringify(TextStore.texts)
+      json: JSON.stringify(this.props.texts)
     });
   }
 

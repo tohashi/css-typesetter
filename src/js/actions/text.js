@@ -18,6 +18,10 @@ export default {
 
   clearTexts() {
     // TODO
+  },
+
+  import() {
+    // TODO
   }
 };
 
