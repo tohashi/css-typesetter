@@ -1,5 +1,5 @@
 import React from 'react';
-import Draggable from 'react-draggable';
+import DraggableText from './draggableText';
 
 export default class DocImage extends React.Component {
   get imageStyle() {
@@ -30,8 +30,8 @@ export default class DocImage extends React.Component {
   handleStopDragging(key) {
     const params = {
       key,
-      x: this.refs[key].state.clientX,
-      y: this.refs[key].state.clientY
+      x: this.refs[key].refs.draggable.state.clientX,
+      y: this.refs[key].refs.draggable.state.clientY
     }
     this.props.actions.updateText(params);
   }
@@ -147,7 +147,7 @@ export default class DocImage extends React.Component {
         {(() => {
           return this.props.text.texts.map((text, i) => {
             return (
-              <Draggable
+              <DraggableText
                 ref={text.key}
                 key={text.key}
                 axis="both"
@@ -157,7 +157,7 @@ export default class DocImage extends React.Component {
                 onStop={this.handleStopDragging.bind(this, text.key)}
               >
                 {this.createDraggableInner(text)}
-              </Draggable>
+              </DraggableText>
             );
           });
         })()}
