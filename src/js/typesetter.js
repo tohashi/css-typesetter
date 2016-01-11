@@ -61,9 +61,8 @@ class Typesetter extends React.Component {
   }
 
   handleUpdateTextParams(params, cb) {
-    this.setState((state) => {
-      _.extend(state.edittingText, params);
-      return state;
+    this.setState({
+      edittingText: _.extend({}, this.state.edittingText, params)
     }, () => {
       if (!!this.findText(this.state.edittingText.key)) {
         this.handleUpdateText();

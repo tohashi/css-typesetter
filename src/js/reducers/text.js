@@ -20,12 +20,20 @@ function getDefaultParams() {
 function getInitialState() {
   return {
     getDefaultParams,
-    texts: [],
-    history: [],
+    texts: loadFromLS() || [],
+    history: _.isEmpty(loadFromLS()) ? [] : [loadFromLS()],
     historyIdx: 0,
     undoable: false,
     redoable: false
   }
+}
+
+function saveToLS(texts) {
+  localStorage.setItem('texts', JSON.stringify(texts));
+}
+
+function loadFromLS() {
+  return JSON.parse(localStorage.getItem('texts'));
 }
 
 const initialState = getInitialState();
@@ -83,9 +91,11 @@ const reduce = (state, action) => {
 }
 
 export default function texts(state = initialState, action) {
-  return _.extend({}, reduce(state, action), {
+  const modifiedState = _.extend({}, reduce(state, action), {
     undoable: state.history.length > 1 && state.historyIdx > 0,
     redoable: state.historyIdx !== Math.max(state.history.length - 1, 0)
   });
+  saveToLS(modifiedState.texts);
+  return modifiedState;
 }
 
