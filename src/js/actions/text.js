@@ -2,18 +2,15 @@ import { ActionTypes } from '../constants'
 
 export default {
   updateText(params) {
-    return {
-      type: ActionTypes.UPDATE_TEXT,
-      params
-    };
+    return { type: ActionTypes.UPDATE_TEXT, params };
   },
 
   removeText(key) {
-    // TODO
+    return { type: ActionTypes.REMOVE_TEXT, key };
   },
 
   copyText(key) {
-    // TODO
+    return { type: ActionTypes.COPY_TEXT, key };
   },
 
   clearTexts() {

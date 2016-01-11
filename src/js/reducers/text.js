@@ -1,17 +1,8 @@
 import _ from 'lodash';
 import { ActionTypes } from '../constants';
 
-function uniqueKey(prefix) {
-  const key = _.uniqueId(prefix);
-  if (instance.exists(key)) {
-    return uniqueKey(`${key}-`);
-  }
-  return key;
-}
-
 function getDefaultParams() {
   return {
-    // TODO uniqueKey
     key: _.uniqueId('text-'),
     x: 0,
     y: 0,
@@ -54,6 +45,24 @@ export default function texts(state = initialState, action) {
     if (added) {
       texts.push(params);
     }
+    return _.extend({}, state, {
+      texts: texts
+    });
+  case ActionTypes.REMOVE_TEXT:
+    const texts = state.texts.filter((text) => {
+      return text.key !== action.key;
+    });
+    return _.extend({}, state, {
+      texts: texts
+    });
+
+  case ActionTypes.COPY_TEXT:
+    const text = _.cloneDeep(state.texts.find((text) => {
+      return text.key === action.key;
+    }));
+    text.key = _.uniqueId(`${text.key}-`);
+    const texts = state.texts;
+    texts.push(text);
     return _.extend({}, state, {
       texts: texts
     });
