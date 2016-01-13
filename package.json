@@ -28,8 +28,8 @@
   "dependencies": {
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
-    "react": "^0.14.5",
-    "react-dom": "^0.14.5",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
     "react-draggable": "github:tohashi/react-draggable",
     "react-dropzone": "^3.3.0",
     "react-modal": "^0.6.1",
