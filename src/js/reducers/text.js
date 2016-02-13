@@ -47,7 +47,7 @@ function isRedoable(historyIdx, history) {
 const initialState = getInitialState();
 
 export default function texts(state = initialState, action) {
-  if (_.contains([ActionTypes.UNDO, ActionTypes.REDO], action.type)) {
+  if (_.includes([ActionTypes.UNDO, ActionTypes.REDO], action.type)) {
     const historyIdx = action.type === ActionTypes.UNDO ?
       state.historyIdx - 1 : state.historyIdx + 1;
     return _.extend({}, state, {
