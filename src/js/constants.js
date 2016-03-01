@@ -6,8 +6,12 @@ const ActionTypes = keyMirror({
   COPY_TEXT: null,
   UNDO: null,
   REDO: null,
-  IMPORT: null,
-  CLEAR: null
+  IMPORT_TEXTS: null,
+  CLEAR_TEXTS: null,
+
+  SET_IMAGE_PATH: null,
+  SET_PREVIEW_WIDTH: null,
+  SET_IMAGE_SIZE: null
 });
 
 export { ActionTypes };
