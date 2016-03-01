@@ -63,9 +63,10 @@ export default function texts(state = initialState, action) {
     switch(action.type) {
     case ActionTypes.UPDATE_TEXT:
       const params = action.params;
+      const originalKey = action.originalKey;
       let added = true;
       texts = state.texts.map((text) => {
-        if (text.key === params.key) {
+        if (text.key === params.key || (originalKey && text.key === originalKey)) {
           text = _.defaults(params, text);
           added = false;
         }

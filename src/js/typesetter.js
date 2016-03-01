@@ -49,23 +49,24 @@ class Typesetter extends React.Component {
     });
   }
 
-  handleUpdateText() {
+  handleUpdateText(originalKey) {
     const text = this.state.edittingText;
     if (!text.key || !text.value) {
       return;
     }
-    this.props.actions.updateText(text);
-    if (!this.findText(text.key)) {
+    this.props.actions.updateText(text, originalKey);
+    if (!this.findText(originalKey)) {
       this.setState({ edittingText: this.props.text.getDefaultParams() });
     }
   }
 
   handleUpdateTextParams(params, cb) {
+    const originalKey = this.state.edittingText.key || params.key;
     this.setState({
       edittingText: _.extend({}, this.state.edittingText, params)
     }, () => {
-      if (!!this.findText(this.state.edittingText.key)) {
-        this.handleUpdateText();
+      if (!!this.findText(originalKey)) {
+        this.handleUpdateText(originalKey);
       } else if (_.isFunction(cb)) {
         cb();
       }
