@@ -149,7 +149,7 @@ export default class DocImage extends React.Component {
             return (
               <DraggableText
                 ref={text.key}
-                key={text.key}
+                key={`${text.key}_${i}`}
                 axis="both"
                 start={{ x: Number(text.x), y: Number(text.y) }}
                 moveOnStartChange={true}

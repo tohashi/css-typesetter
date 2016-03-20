@@ -51,7 +51,7 @@ export default class SettingPanel extends React.Component {
         <p>texts</p>
         <ul>
           {(() => {
-            return texts.map((text) => {
+            return texts.map((text, i) => {
               let className = 'text-item'
               if (this.isCurrentText(text.key)) {
                 className += ' selected';
@@ -59,7 +59,7 @@ export default class SettingPanel extends React.Component {
               return (
                 <li
                   className={className}
-                  key={text.key}
+                  key={`${text.key}_${i}`}
                   onClick={this.handleSelectText.bind(this, text.key)} >
                   {text.key}
                 </li>
