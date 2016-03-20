@@ -91,7 +91,8 @@ export default class SettingPanel extends React.Component {
 
         <Tabs selectedIndex={0}>
           <TabList>
-            <Tab>parameters</Tab>
+            <Tab>params</Tab>
+            <Tab>items</Tab>
             <Tab>publishing</Tab>
           </TabList>
           <TabPanel className="tab-panel">
@@ -112,6 +113,8 @@ export default class SettingPanel extends React.Component {
                 </div>
               );
             })()}
+          </TabPanel>
+          <TabPanel className="tab-panel">
             {textList}
             <button onClick={actions.clearTexts}>clear</button>
           </TabPanel>
