@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import Modal from 'react-modal';
+import ClipboardButton from 'react-clipboard.js';
 
 export default class Publishing extends React.Component {
   get modalStyle() {
@@ -46,6 +47,18 @@ export default class Publishing extends React.Component {
     });
   }
 
+  onSuccess() {
+    alert('copied!');
+  }
+
+  getHtml() {
+    return document.querySelector('.preview-html pre').textContent;
+  }
+
+  getCss() {
+    return document.querySelector('.preview-css pre').textContent;
+  }
+
   render() {
     return (
       <div>
@@ -57,6 +70,9 @@ export default class Publishing extends React.Component {
         >
           <div className="code-preview">
             <div className="preview-html">
+              <ClipboardButton option-text={this.getHtml} onSuccess={this.onSuccess}>
+                copy
+              </ClipboardButton>
               <pre>
                 {`<div class="${this.props.imageClassName}">\n`}
                   {this.props.texts.map((text) => {
@@ -66,6 +82,9 @@ export default class Publishing extends React.Component {
               </pre>
             </div>
             <div className="preview-css">
+              <ClipboardButton option-text={this.getCss} onSuccess={this.onSuccess}>
+                copy
+              </ClipboardButton>
               <pre>
 {`.${this.props.imageClassName} {
   position: relative;
