@@ -35,6 +35,15 @@ class Typesetter extends React.Component {
     });
   }
 
+  getMaxId(prefix) {
+    const re = new RegExp('^' + prefix + '(\\d+)');
+    return this.props.text.texts.map((text) => {
+      return +(re.exec(text.key)[1]);
+    }).reduce(function(x, y) {
+      return (x > y) ? x : y;
+    }, 0);
+  }
+
   handleSelectText(key) {
     const text = this.findText(key);
     this.setState((state) => {
@@ -43,6 +52,10 @@ class Typesetter extends React.Component {
         state.edittingText = text;
       } else {
         state.edittingText = this.props.text.getDefaultParams();
+
+        const re = new RegExp('^(\\D+-)\\d+');
+        const prefix = re.exec(state.edittingText.key)[1];
+        state.edittingText.key = prefix + (this.getMaxId(prefix) + 1);
       }
       state.draggingKey = null;
       return state;
@@ -56,7 +69,12 @@ class Typesetter extends React.Component {
     }
     this.props.actions.updateText(text, originalKey);
     if (!this.findText(originalKey)) {
-      this.setState({ edittingText: this.props.text.getDefaultParams() });
+      var edittingText = this.props.text.getDefaultParams();
+
+      const re = new RegExp('^(\\D+-)(\\d+)');
+      const result = re.exec(text.key);
+      edittingText.key = result[1] + (Math.max(this.getMaxId(result[1]), result[2]) + 1);
+      this.setState({ edittingText: edittingText });
     }
   }
 
