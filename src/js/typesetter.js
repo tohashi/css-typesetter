@@ -38,7 +38,7 @@ class Typesetter extends React.Component {
   getMaxId(prefix) {
     const re = new RegExp('^' + prefix + '(\\d+)');
     return this.props.text.texts.map((text) => {
-      return +(re.exec(text.key)[1]);
+      return +((re.exec(text.key) || [, 0])[1]);
     }).reduce(function(x, y) {
       return (x > y) ? x : y;
     }, 0);
