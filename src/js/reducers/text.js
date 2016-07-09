@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { ActionTypes } from '../constants';
 
-function getDefaultParams() {
+function getDefaultParams(uniqueId) {
   return {
-    key: _.uniqueId('text-'),
+    key: (uniqueId || _.uniqueId)('text-'),
     x: 0,
     y: 0,
     width: 160,
