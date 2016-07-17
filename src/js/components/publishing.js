@@ -48,7 +48,7 @@ export default class Publishing extends React.Component {
     return this.state.json;
   }
 
-  onSuccess() {
+  onSuccessCopying() {
     alert('copied!');
   }
 
@@ -111,13 +111,13 @@ export default class Publishing extends React.Component {
         >
           <div className="code-preview">
             <div className="preview-html">
-              <ClipboardButton option-text={this.getRawHtml.bind(this)} onSuccess={this.onSuccess}>
+              <ClipboardButton option-text={this.getRawHtml.bind(this)} onSuccess={this.onSuccessCopying}>
                 copy
               </ClipboardButton>
               <pre>{this.getRawHtml()}</pre>
             </div>
             <div className="preview-css">
-              <ClipboardButton option-text={this.getRawCss.bind(this)} onSuccess={this.onSuccess}>
+              <ClipboardButton option-text={this.getRawCss.bind(this)} onSuccess={this.onSuccessCopying}>
                 copy
               </ClipboardButton>
               <pre>{this.getRawCss()}</pre>
@@ -127,7 +127,7 @@ export default class Publishing extends React.Component {
         <div className="json-export">
           <div>
             <button onClick={this.handleImport.bind(this)}>import json</button>
-            <ClipboardButton option-text={this.handleExport.bind(this)} onSuccess={this.onSuccess}>export json</ClipboardButton>
+            <ClipboardButton option-text={this.handleExport.bind(this)} onSuccess={this.onSuccessCopying}>export json</ClipboardButton>
           </div>
           <textarea value={this.state.json} onChange={this.handleInput.bind(this)} />
         </div>
