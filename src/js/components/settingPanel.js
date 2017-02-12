@@ -110,6 +110,7 @@ export default class SettingPanel extends React.Component {
                 <div>
                   <button onClick={this.handleCopyText.bind(this)}>copy</button>
                   <button onClick={this.handleRemoveText.bind(this)}>remove</button>
+                  <button onClick={this.handleSelectText.bind(this, null)}>deselect</button>
                 </div>
               );
             })()}
